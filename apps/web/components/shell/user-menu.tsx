@@ -1,6 +1,7 @@
 "use client";
 
 import { Bell, User } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { authClient } from "@/lib/auth/client";
 
 export function NotificationsButton() {
   const t = useTranslations("shell");
@@ -31,6 +33,14 @@ export function NotificationsButton() {
 
 export function UserMenu({ name }: { name: string }) {
   const t = useTranslations("shell");
+  const router = useRouter();
+
+  async function signOut() {
+    await authClient.signOut();
+    router.replace("/auth/sign-in");
+    router.refresh();
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -44,7 +54,7 @@ export function UserMenu({ name }: { name: string }) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>{t("profile")}</DropdownMenuItem>
-        <DropdownMenuItem>{t("signOut")}</DropdownMenuItem>
+        <DropdownMenuItem onSelect={signOut}>{t("signOut")}</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

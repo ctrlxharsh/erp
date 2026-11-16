@@ -164,3 +164,9 @@ Status values: `Accepted`, `Superseded by ADR-NNN`, `Proposed`.
 - **Rejected:** TanStack Table 9 (a new API that we have not verified; `ERPDataTable` is the only place it is used, so upgrading later is contained); running the shadcn CLI (it would only copy the same files and prompts interactively in a monorepo).
 - **Risks / follow-ups:** The logo is only a JPG, so the generated icons are raster. A vector source is still needed for a crisp SVG favicon.
 
+## ADR-025 — Access model: memberships, active school, procedure chain
+**Status:** Accepted · 2026-11-16
+- **Decision:** `platform_users` holds Super Admin / Platform Support; `memberships` holds one row per (user, school) with an array of school roles. A request's school is the `erp_school` cookie, verified against the user's memberships: a user with one school gets it automatically, with several must choose, and an id they do not belong to is treated as no choice. Schools that are suspended, expired or deleted lock every user out; `grace` keeps working (ADR-015). API procedures chain `publicProcedure` → `authedProcedure` → `schoolProcedure` → `requirePermission(...)`, and `platformProcedure` for platform accounts. Output shapes are validated with Zod schemas from `@erp/contracts`.
+- **Rejected:** a foreign key from `user_id` to `neon_auth."user"` (that schema is managed by Neon and may change); trusting a school id sent by the client.
+- **Notes:** UUID v7 keys use Postgres 18's `uuidv7()`. The first Super Admin is created with `pnpm db:grant <email> platform super_admin`. Row-level security and the scoped data layer follow in PR 0.4.
+
