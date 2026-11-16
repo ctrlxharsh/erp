@@ -20,7 +20,7 @@ If the constitution and the code disagree, stop and ask which one is right.
 2. **Ask before:** architecture changes, new significant dependencies, paid services, auth or storage changes, irreversible data changes, production deploys or migrations on prod.
 3. **Build one vertical slice at a time** (schema → API with permission + school scope → web UI → tests).
 4. **After editing:** run Biome, type check and tests; report real results and anything not tested. Never claim a command passed without running it.
-5. **Ship via GitHub:** a branch per slice (`feat/…`, `fix/…`, `docs/…`, `chore/…`), Conventional Commit messages, PR with what/why, screenshots for UI, migration notes. Keep `main` deployable.
+5. **Ship directly to `main`** (founder's instruction, 2026-11-16): no pull requests or feature branches. Commit small, Conventional Commit messages, and run Biome, type check, tests and build before every push. Keep `main` deployable.
 
 ## Non-negotiables (see CONSTITUTION §2)
 - Server-side permission checks on every procedure; UI hiding is never security.
