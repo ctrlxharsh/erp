@@ -1,7 +1,9 @@
+import type { Database } from "@erp/db";
 import { type Permission, type PlatformRole, permissionsFor, type SchoolRole } from "@erp/domain";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { type AccessStore, resolveSchoolAccess } from "./access";
+import type { ObjectStorage } from "./storage";
 
 export interface SessionUser {
   id: string;
@@ -10,6 +12,8 @@ export interface SessionUser {
 }
 
 export interface Context {
+  db: Database;
+  storage: ObjectStorage;
   store: AccessStore;
   /** Null when signed out. Supplied by the web app from the Neon Auth session. */
   user: SessionUser | null;
