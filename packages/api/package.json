@@ -8,7 +8,8 @@
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
-    "test": "vitest run"
+    "test": "vitest run",
+    "cors": "node --env-file=../../.env.local scripts/set-bucket-cors.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.1169.0",

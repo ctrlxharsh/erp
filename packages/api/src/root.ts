@@ -2,6 +2,7 @@ import { filesRouter } from "./routers/files";
 import { platformRouter } from "./routers/platform";
 import { schoolRouter } from "./routers/school";
 import { sessionRouter } from "./routers/session";
+import { setupRouter } from "./routers/setup";
 import { createCallerFactory, router } from "./trpc";
 
 export const appRouter = router({
@@ -9,6 +10,7 @@ export const appRouter = router({
   files: filesRouter,
   platform: platformRouter,
   school: schoolRouter,
+  setup: setupRouter,
 });
 
 export type AppRouter = typeof appRouter;

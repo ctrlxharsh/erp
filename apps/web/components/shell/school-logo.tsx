@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 /** Shows a logo image, or the school's initials on a navy tile when there is no logo. */
 export function SchoolLogo({
   name,
@@ -11,7 +9,17 @@ export function SchoolLogo({
   size?: number;
 }) {
   if (logoSrc) {
-    return <Image src={logoSrc} alt="" width={size} height={size} className="rounded-md" />;
+    // A plain <img>: the link is a short-lived signed URL, which must not go through the image optimizer.
+    return (
+      // biome-ignore lint/performance/noImgElement: signed storage URL, see above
+      <img
+        src={logoSrc}
+        alt=""
+        width={size}
+        height={size}
+        className="shrink-0 rounded-md object-contain"
+      />
+    );
   }
   const initials = name
     .split(/\s+/)

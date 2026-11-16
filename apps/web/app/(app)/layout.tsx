@@ -14,14 +14,26 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
     if (error instanceof TRPCError && error.code === "UNAUTHORIZED") redirect("/auth/sign-in");
     throw error;
   });
-  // Until the school logo upload ships (PR 0.7) the shell shows initials on a navy tile.
   const active = me.schools.find((school) => school.id === me.activeSchoolId);
+  // Permissions and logo of the active school (platform accounts have no school).
+  let permissions: string[] = [];
+  let logoSrc: string | undefined;
+  if (active) {
+    const [current, branding] = await Promise.all([api.school.current(), api.school.branding()]);
+    permissions = current.permissions;
+    if (branding.logoFileId) {
+      logoSrc = (
+        await api.files.downloadUrl({ fileId: branding.logoFileId }).catch(() => undefined)
+      )?.url;
+    }
+  }
   return (
     <TRPCReactProvider>
       <AppShell
-        school={{ name: active?.name ?? "ERP" }}
+        school={{ name: active?.name ?? "ERP", logoSrc }}
         userName={me.user.name}
         isPlatform={me.platformRole !== null}
+        permissions={permissions}
       >
         {children}
       </AppShell>

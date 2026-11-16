@@ -17,12 +17,14 @@ A simple, clean school management platform for Indian schools. Built by **PastAn
 
 ## Status
 
-Phase 0 in progress: scaffold, Neon Auth/Storage wiring, design tokens and app shell done. Next: permissions and database access (see CONSTITUTION §15).
+Phase 0 (foundation) is complete: scaffold, design system and app shell, Neon Auth, permissions, tenant isolation (RLS), audit log, private file pipeline, Super Admin school management, and school setup (profile and logo, sessions, classes, sections, subjects). Next: Phase 1, people (see CONSTITUTION §15).
 
 ## Getting started
 
 ```bash
 pnpm install
+neon login && neon checkout test && neon deploy   # Neon test branch, writes .env.local
+pnpm --filter @erp/db db:migrate                  # apply migrations to that branch
 pnpm dev
 ```
 

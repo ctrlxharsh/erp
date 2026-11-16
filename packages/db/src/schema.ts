@@ -1,14 +1,18 @@
 import { filePurposeNames, platformRoles, schoolRoles } from "@erp/domain";
 import { sql } from "drizzle-orm";
 import {
+  boolean,
+  date,
   index,
   integer,
   jsonb,
   pgEnum,
   pgTable,
+  primaryKey,
   text,
   timestamp,
   unique,
+  uniqueIndex,
   uuid,
 } from "drizzle-orm/pg-core";
 
@@ -121,4 +125,106 @@ export const files = pgTable(
     readyAt: timestamp("ready_at", { withTimezone: true }),
   },
   (table) => [index("files_school_id_idx").on(table.schoolId)],
+);
+
+/** One profile row per school: the details shown on documents and in the app header. */
+export const schoolProfiles = pgTable("school_profiles", {
+  schoolId: uuid("school_id")
+    .primaryKey()
+    .references(() => schools.id),
+  address: text("address"),
+  affiliationNo: text("affiliation_no"),
+  phone: text("phone"),
+  /** The school's logo; the file itself is in private object storage. */
+  logoFileId: uuid("logo_file_id").references(() => files.id),
+  timezone: text("timezone").notNull().default("Asia/Kolkata"),
+  updatedAt: updatedAt(),
+});
+
+/** An academic year such as "2026-27". Exactly one per school may be active. */
+export const academicSessions = pgTable(
+  "academic_sessions",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    name: text("name").notNull(),
+    startDate: date("start_date").notNull(),
+    endDate: date("end_date").notNull(),
+    isActive: boolean("is_active").notNull().default(false),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    unique("academic_sessions_school_name_unique").on(table.schoolId, table.name),
+    uniqueIndex("academic_sessions_one_active_idx")
+      .on(table.schoolId)
+      .where(sql`${table.isActive}`),
+  ],
+);
+
+export const classes = pgTable(
+  "classes",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    name: text("name").notNull(),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: createdAt(),
+  },
+  (table) => [unique("classes_school_name_unique").on(table.schoolId, table.name)],
+);
+
+export const sections = pgTable(
+  "sections",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    classId: uuid("class_id")
+      .notNull()
+      .references(() => classes.id),
+    name: text("name").notNull(),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    unique("sections_class_name_unique").on(table.classId, table.name),
+    index("sections_school_id_idx").on(table.schoolId),
+  ],
+);
+
+export const subjects = pgTable(
+  "subjects",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    name: text("name").notNull(),
+    createdAt: createdAt(),
+  },
+  (table) => [unique("subjects_school_name_unique").on(table.schoolId, table.name)],
+);
+
+/** Which subjects a class studies. */
+export const classSubjects = pgTable(
+  "class_subjects",
+  {
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    classId: uuid("class_id")
+      .notNull()
+      .references(() => classes.id),
+    subjectId: uuid("subject_id")
+      .notNull()
+      .references(() => subjects.id),
+  },
+  (table) => [
+    primaryKey({ columns: [table.classId, table.subjectId] }),
+    index("class_subjects_school_id_idx").on(table.schoolId),
+  ],
 );

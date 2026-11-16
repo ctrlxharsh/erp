@@ -9,18 +9,25 @@ import { navItems } from "./nav";
 export function SidebarNav({
   onNavigate,
   isPlatform = false,
+  permissions = [],
 }: {
   onNavigate?: () => void;
   isPlatform?: boolean;
+  permissions?: string[];
 }) {
   const t = useTranslations("nav");
   const pathname = usePathname();
   return (
     <nav aria-label={t("main")} className="flex flex-col gap-1 p-3">
       {navItems
-        .filter((item) => !item.platformOnly || isPlatform)
+        .filter(
+          (item) =>
+            (!item.platformOnly || isPlatform) &&
+            (!item.permission || permissions.includes(item.permission)),
+        )
         .map(({ href, labelKey, icon: Icon }) => {
-          const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
+          const section = href.startsWith("/setup") ? "/setup" : href;
+          const active = href === "/" ? pathname === "/" : pathname.startsWith(section);
           return (
             <Link
               key={href}

@@ -18,11 +18,13 @@ export async function AppShell({
   school,
   userName,
   isPlatform = false,
+  permissions = [],
   children,
 }: {
   school: ShellSchool;
   userName: string;
   isPlatform?: boolean;
+  permissions?: string[];
   children: ReactNode;
 }) {
   const t = await getTranslations();
@@ -35,11 +37,11 @@ export async function AppShell({
         {t("nav.skip")}
       </a>
       <aside className="hidden w-60 shrink-0 border-r border-border bg-surface md:block">
-        <SidebarNav isPlatform={isPlatform} />
+        <SidebarNav isPlatform={isPlatform} permissions={permissions} />
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex h-16 items-center gap-3 border-b border-border px-4">
-          <MobileNav isPlatform={isPlatform} />
+          <MobileNav isPlatform={isPlatform} permissions={permissions} />
           <SchoolLogo name={school.name} logoSrc={school.logoSrc} />
           <span className="truncate font-semibold text-primary">{school.name}</span>
           <div className="ml-auto flex items-center gap-1">
