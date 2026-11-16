@@ -12,7 +12,7 @@
     "test": "turbo run test",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
-    "check": "biome check . && turbo run typecheck test build"
+    "check": "biome check . && turbo run typecheck test && turbo run build"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.8",

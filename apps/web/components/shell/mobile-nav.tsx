@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { SidebarNav } from "./sidebar-nav";
 
 /** Below the md breakpoint the sidebar becomes a toggled panel under the top bar. */
-export function MobileNav() {
+export function MobileNav({ isPlatform = false }: { isPlatform?: boolean }) {
   const t = useTranslations("shell");
   const [open, setOpen] = useState(false);
   return (
@@ -31,7 +31,7 @@ export function MobileNav() {
           id="mobile-nav"
           className="absolute inset-x-0 top-16 z-40 border-b border-border bg-background"
         >
-          <SidebarNav onNavigate={() => setOpen(false)} />
+          <SidebarNav isPlatform={isPlatform} onNavigate={() => setOpen(false)} />
         </div>
       ) : null}
     </div>

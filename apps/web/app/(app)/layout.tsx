@@ -18,7 +18,11 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
   const active = me.schools.find((school) => school.id === me.activeSchoolId);
   return (
     <TRPCReactProvider>
-      <AppShell school={{ name: active?.name ?? "ERP" }} userName={me.user.name}>
+      <AppShell
+        school={{ name: active?.name ?? "ERP" }}
+        userName={me.user.name}
+        isPlatform={me.platformRole !== null}
+      >
         {children}
       </AppShell>
     </TRPCReactProvider>

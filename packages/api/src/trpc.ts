@@ -3,6 +3,7 @@ import { type Permission, type PlatformRole, permissionsFor, type SchoolRole } f
 import { initTRPC, TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { type AccessStore, resolveSchoolAccess } from "./access";
+import type { AuthAdmin } from "./auth-admin";
 import type { ObjectStorage } from "./storage";
 
 export interface SessionUser {
@@ -15,6 +16,7 @@ export interface Context {
   db: Database;
   storage: ObjectStorage;
   store: AccessStore;
+  authAdmin: AuthAdmin;
   /** Null when signed out. Supplied by the web app from the Neon Auth session. */
   user: SessionUser | null;
   /** The school the user picked (cookie), if any. Verified against memberships, never trusted. */
@@ -49,6 +51,17 @@ export const platformProcedure = authedProcedure.use(async ({ ctx, next }) => {
     throw new TRPCError({ code: "FORBIDDEN", message: "You do not have access to this." });
   return next({ ctx: { ...ctx, platformRole } });
 });
+
+/** Use after `platformProcedure`: `platformProcedure.use(requirePlatformPermission("schools.manage"))`. */
+export function requirePlatformPermission(permission: Permission) {
+  return t.middleware(({ ctx, next }) => {
+    const role = (ctx as { platformRole?: PlatformRole }).platformRole;
+    if (!role || !permissionsFor([role]).has(permission)) {
+      throw new TRPCError({ code: "FORBIDDEN", message: "You do not have permission to do this." });
+    }
+    return next();
+  });
+}
 
 /**
  * Resolves the school this request acts on, checks its status and the caller's membership, and

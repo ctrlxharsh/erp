@@ -1,6 +1,7 @@
 import "server-only";
 import { type Context, createAccessStore, createNeonStorage } from "@erp/api";
 import { cookies } from "next/headers";
+import { createAuthAdmin } from "@/lib/auth/admin";
 import { auth } from "@/lib/auth/server";
 import { getDb } from "@/lib/db";
 
@@ -21,6 +22,7 @@ export async function createContext(): Promise<Context> {
   return {
     db: getDb(),
     storage: getStorage(),
+    authAdmin: createAuthAdmin(),
     store: createAccessStore(getDb()),
     user,
     activeSchoolId: cookieStore.get(ACTIVE_SCHOOL_COOKIE)?.value ?? null,

@@ -41,6 +41,7 @@ run("files pipeline (Neon database + Object Storage)", () => {
   const as = (userId: string, activeSchoolId: string): Context => ({
     db,
     storage,
+    authAdmin: null as never,
     store: createAccessStore(db),
     user: { id: userId, email: `${userId}@example.com`, name: "Test" },
     activeSchoolId,

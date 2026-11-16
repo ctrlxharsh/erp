@@ -17,10 +17,12 @@ export interface ShellSchool {
 export async function AppShell({
   school,
   userName,
+  isPlatform = false,
   children,
 }: {
   school: ShellSchool;
   userName: string;
+  isPlatform?: boolean;
   children: ReactNode;
 }) {
   const t = await getTranslations();
@@ -33,11 +35,11 @@ export async function AppShell({
         {t("nav.skip")}
       </a>
       <aside className="hidden w-60 shrink-0 border-r border-border bg-surface md:block">
-        <SidebarNav />
+        <SidebarNav isPlatform={isPlatform} />
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex h-16 items-center gap-3 border-b border-border px-4">
-          <MobileNav />
+          <MobileNav isPlatform={isPlatform} />
           <SchoolLogo name={school.name} logoSrc={school.logoSrc} />
           <span className="truncate font-semibold text-primary">{school.name}</span>
           <div className="ml-auto flex items-center gap-1">

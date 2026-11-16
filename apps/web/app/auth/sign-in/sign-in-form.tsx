@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -102,6 +103,9 @@ export function SignInForm() {
       <Button type="submit" loading={isSubmitting}>
         {t("signIn")}
       </Button>
+      <Link href="/auth/forgot-password" className="text-center text-sm text-primary underline">
+        {t("forgot")}
+      </Link>
     </form>
   );
 }
