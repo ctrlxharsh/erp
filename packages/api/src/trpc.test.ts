@@ -38,7 +38,15 @@ const member = (
 });
 
 function ctx(over: Partial<Context> = {}): Context {
-  return { store: store(), user, activeSchoolId: null, ...over };
+  // The procedure-chain tests never touch the database or storage.
+  return {
+    db: null as never,
+    storage: null as never,
+    store: store(),
+    user,
+    activeSchoolId: null,
+    ...over,
+  };
 }
 
 // A tiny router that exercises each procedure builder.

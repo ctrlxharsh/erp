@@ -1,8 +1,14 @@
 import "server-only";
-import { type Context, createAccessStore } from "@erp/api";
+import { type Context, createAccessStore, createNeonStorage } from "@erp/api";
 import { cookies } from "next/headers";
 import { auth } from "@/lib/auth/server";
 import { getDb } from "@/lib/db";
+
+let storage: ReturnType<typeof createNeonStorage> | undefined;
+function getStorage() {
+  storage ??= createNeonStorage("uploads");
+  return storage;
+}
 
 export const ACTIVE_SCHOOL_COOKIE = "erp_school";
 
@@ -13,6 +19,8 @@ export async function createContext(): Promise<Context> {
     ? { id: session.user.id, email: session.user.email, name: session.user.name }
     : null;
   return {
+    db: getDb(),
+    storage: getStorage(),
     store: createAccessStore(getDb()),
     user,
     activeSchoolId: cookieStore.get(ACTIVE_SCHOOL_COOKIE)?.value ?? null,

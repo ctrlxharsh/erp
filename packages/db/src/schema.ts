@@ -1,6 +1,16 @@
-import { platformRoles, schoolRoles } from "@erp/domain";
+import { filePurposeNames, platformRoles, schoolRoles } from "@erp/domain";
 import { sql } from "drizzle-orm";
-import { index, jsonb, pgEnum, pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
+import {
+  index,
+  integer,
+  jsonb,
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+  unique,
+  uuid,
+} from "drizzle-orm/pg-core";
 
 /**
  * Conventions (CONSTITUTION §6.8): UUID v7 primary keys (Postgres 18 `uuidv7()`), timestamptz,
@@ -84,4 +94,31 @@ export const auditEvents = pgTable(
     index("audit_events_school_created_idx").on(table.schoolId, table.createdAt),
     index("audit_events_actor_idx").on(table.actorUserId),
   ],
+);
+
+export const filePurposeEnum = pgEnum("file_purpose", filePurposeNames as [string, ...string[]]);
+export const fileStatus = pgEnum("file_status", ["pending", "ready"]);
+
+/**
+ * File metadata (CONSTITUTION §2.5). The bytes live in private object storage: `key` is the final
+ * object key, set when the upload is finalized. Files are never stored in database columns.
+ */
+export const files = pgTable(
+  "files",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    purpose: filePurposeEnum("purpose").notNull(),
+    status: fileStatus("status").notNull().default("pending"),
+    /** Stored MIME type: `image/webp` or `application/pdf`. Set on finalize. */
+    mime: text("mime"),
+    sizeBytes: integer("size_bytes"),
+    key: text("key"),
+    ownerUserId: uuid("owner_user_id").notNull(),
+    createdAt: createdAt(),
+    readyAt: timestamp("ready_at", { withTimezone: true }),
+  },
+  (table) => [index("files_school_id_idx").on(table.schoolId)],
 );
