@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Components use the semantic names (primary, danger, ...), never raw hex.
+ * Brand colours come from CONSTITUTION §7.1. Where a brand colour fails WCAG AA as text or as a
+ * button background (teal, coral), the semantic token uses a darker shade of the same hue.
+ */
+:root {
+  --brand-navy: #01306f;
+  --brand-teal: #02969e;
+  --brand-saffron: #fdb802;
+  --brand-coral: #f35844;
+
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --surface: #f8fafc;
+  --muted: #f1f5f9;
+  --muted-foreground: #475569;
+  --border: #e2e8f0;
+  --ring: #01306f;
+
+  --primary: #01306f;
+  --primary-foreground: #ffffff;
+  --secondary: #027a81;
+  --secondary-foreground: #ffffff;
+  --info: #027a81;
+  --success: #15803d;
+  --success-foreground: #ffffff;
+  --warning: #fdb802;
+  --warning-foreground: #3b2a00;
+  --danger: #c4311e;
+  --danger-foreground: #ffffff;
+
+  --radius: 0.5rem;
+}
+
+@theme inline {
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-teal: var(--brand-teal);
+  --color-brand-saffron: var(--brand-saffron);
+  --color-brand-coral: var(--brand-coral);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-info: var(--info);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+  --radius-md: var(--radius);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-size: 1rem;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}

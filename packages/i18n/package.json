@@ -1,0 +1,16 @@
+{
+  "name": "@erp/i18n",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./en.json": "./src/en.json"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@erp/config": "workspace:*"
+  }
+}

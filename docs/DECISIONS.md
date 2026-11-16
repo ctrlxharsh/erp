@@ -157,3 +157,10 @@ Status values: `Accepted`, `Superseded by ADR-NNN`, `Proposed`.
   - Rate limiting and lockout (§6.4) must be checked against what Managed Auth provides.
   - **Expo support** for Phase 6 must be verified with `@neon/auth`.
   - Neon Auth is a managed dependency: auth availability follows Neon's.
+
+## ADR-024 — UI foundation choices (Phase 0.2)
+**Status:** Accepted · 2026-11-16
+- **Decision:** Tailwind CSS 4 with CSS-variable tokens in `apps/web/app/globals.css`; shadcn-style components written by hand in `components/ui` (Radix primitives, `class-variance-authority`); next-intl with the English catalog in `packages/i18n`; **TanStack Table 8.21** for `ERPDataTable`. Semantic `secondary` and `danger` use darker shades of brand teal and coral (`#027A81`, `#C4311E`) so white text meets WCAG AA; the exact brand colours stay available as `brand-*` for decoration and charts.
+- **Rejected:** TanStack Table 9 (a new API that we have not verified; `ERPDataTable` is the only place it is used, so upgrading later is contained); running the shadcn CLI (it would only copy the same files and prompts interactively in a monorepo).
+- **Risks / follow-ups:** The logo is only a JPG, so the generated icons are raster. A vector source is still needed for a crisp SVG favicon.
+
