@@ -17,7 +17,7 @@ A simple, clean school management platform for Indian schools. Built by **PastAn
 
 ## Status
 
-Phase 0 in progress: monorepo scaffold done. Next: design tokens and app shell (see CONSTITUTION §15).
+Phase 0 in progress: scaffold, Neon Auth/Storage wiring, design tokens and app shell done. Next: permissions and database access (see CONSTITUTION §15).
 
 ## Getting started
 
