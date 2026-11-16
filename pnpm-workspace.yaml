@@ -13,3 +13,12 @@ minimumReleaseAgeExclude:
   - "@biomejs/cli-linux-x64@2.6.8"
   - "@biomejs/cli-win32-arm64@2.6.8"
   - "@biomejs/cli-win32-x64@2.6.8"
+  - "@trpc/server@11.28.3"
+  - "@trpc/client@11.28.3"
+  - "@trpc/tanstack-react-query@11.28.3"
+
+# Install scripts we deliberately do not run (their binaries ship prebuilt via optional packages).
+allowBuilds:
+  "@parcel/watcher": false
+  "@swc/core": false
+  esbuild: false

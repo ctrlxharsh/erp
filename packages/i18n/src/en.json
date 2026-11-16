@@ -1,5 +1,8 @@
 {
-  "app": { "name": "ERP", "poweredBy": "Powered by ERP · PastAndPixels Group" },
+  "app": {
+    "name": "ERP",
+    "poweredBy": "Powered by ERP · PastAndPixels Group"
+  },
   "nav": {
     "today": "Today",
     "components": "Components",
@@ -14,7 +17,9 @@
     "profile": "My profile",
     "signOut": "Sign out",
     "openMenu": "Open menu",
-    "closeMenu": "Close menu"
+    "closeMenu": "Close menu",
+    "signingOut": "Signing out",
+    "noSchool": "No school linked"
   },
   "today": {
     "title": "Today",
@@ -43,5 +48,17 @@
     "rejected": "Rejected",
     "published": "Published",
     "draft": "Draft"
+  },
+  "auth": {
+    "title": "Sign in to ERP",
+    "subtitle": "Use the email address your school gave you.",
+    "email": "Email address",
+    "emailInvalid": "Enter a valid email address",
+    "password": "Password",
+    "passwordRequired": "Enter your password",
+    "signIn": "Sign in",
+    "invalid": "The email or password is not correct. Please try again.",
+    "failed": "We could not sign you in. Please try again in a moment.",
+    "poweredBy": "Powered by ERP · PastAndPixels Group"
   }
 }
