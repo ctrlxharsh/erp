@@ -37,7 +37,7 @@ Status values: `Accepted`, `Superseded by ADR-NNN`, `Proposed`.
 - **Risks:** Login page cannot show the school logo. Subdomains can be added later.
 
 ## ADR-005 — Better Auth for authentication
-**Status:** Accepted · 2026-11-16
+**Status:** Superseded by ADR-023 · 2026-11-16
 - **Decision:** Better Auth, self-hosted in the Next.js app, Drizzle adapter, cookie sessions on web, Expo integration with secure storage on mobile. Accounts created by admins with email invites and forced password change on first login. Email required for every login account.
 - **Rejected:** Clerk (per-user cost, user data outside our DB); Neon Auth (needed verification for Expo); custom auth (security risk).
 - **Why:** Users live in our database, no per-user fee, supports web + Expo.
@@ -144,3 +144,16 @@ Status values: `Accepted`, `Superseded by ADR-NNN`, `Proposed`.
 ## ADR-022 — GitHub workflow
 **Status:** Accepted · 2026-11-16
 - **Decision:** Protected `main`, one branch and PR per slice, Conventional Commits, squash merge, production deploys from `main`.
+
+## ADR-023 — Neon Auth (Managed Better Auth) replaces self-hosted Better Auth
+**Status:** Accepted · 2026-11-16 · Supersedes ADR-005
+- **Decision:** Authentication uses **Neon Auth**, which is Managed Better Auth: users, sessions and auth config live in the `neon_auth` schema of our own Neon database, and auth state branches with the database. The web app proxies to it through `@neon/auth` (`/api/auth/*` route handler, `auth.getSession()` on the server). The `test` and `production` Neon branches each have their own Auth instance. Everything else in ADR-005 stands: accounts are created by the level above, email is required, forced password change on first login.
+- **Rejected:** keeping self-hosted Better Auth (more code and security surface for us to own); Clerk (per-user cost, data outside our DB).
+- **Why:** The founder chose it. Less auth code to maintain, users still live in our database, no per-user fee.
+- **Risks / follow-ups (verify in the auth PR, record outcomes here):**
+  - Managed Auth has a **fixed plugin set**: no MFA, passkeys, custom plugins, server hooks or custom JWT claims. We cannot add these without moving to self-managed Better Auth.
+  - **Mobile-number login** (CONSTITUTION §3.3) is not confirmed: the phone-number plugin is constrained (no phone-first sign-up, needs our own SMS webhook). Until verified, login is by email only.
+  - **Admin-created accounts, invite emails and forced first-login password change** must be checked against the Managed admin plugin and its shared SMTP. Production needs custom SMTP.
+  - Rate limiting and lockout (§6.4) must be checked against what Managed Auth provides.
+  - **Expo support** for Phase 6 must be verified with `@neon/auth`.
+  - Neon Auth is a managed dependency: auth availability follows Neon's.

@@ -2,3 +2,9 @@
 node_modules/
 .env*
 !.env.example
+.next/
+.turbo/
+*.tsbuildinfo
+next-env.d.ts
+coverage/
+.neon

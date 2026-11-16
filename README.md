@@ -17,4 +17,13 @@ A simple, clean school management platform for Indian schools. Built by **PastAn
 
 ## Status
 
-Planning complete. Next: Phase 0, the monorepo scaffold and foundation (see CONSTITUTION §15).
+Phase 0 in progress: monorepo scaffold done. Next: design tokens and app shell (see CONSTITUTION §15).
+
+## Getting started
+
+```bash
+pnpm install
+pnpm dev
+```
+
+See the Commands section in [CLAUDE.md](CLAUDE.md) for all scripts.

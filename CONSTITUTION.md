@@ -134,7 +134,7 @@ Versions are pinned when the scaffold is created, after checking current officia
 | Forms | **React Hook Form + Zod** | Same Zod schemas on server and both clients |
 | API | **tRPC** inside Next.js route handlers | One API for web and mobile |
 | Server state | **TanStack Query** (via tRPC integration) | |
-| Auth | **Better Auth** | Self-hosted in our app, users in our DB, Expo support; verify plugin versions |
+| Auth | **Neon Auth** (Managed Better Auth, `@neon/auth`) | Users in our Neon DB (`neon_auth` schema); see ADR-023 for limits and follow-ups |
 | Database | **Neon PostgreSQL** | Region: Singapore |
 | ORM / migrations | **Drizzle ORM + Drizzle Kit** | Raw SQL allowed when clearer |
 | File storage | **Neon Object Storage** (S3-compatible, private buckets, presigned URLs) | Region: Singapore. Newer product; S3 API keeps us portable |
@@ -202,8 +202,8 @@ Three tiers. Prefer the highest tier that does not break either platform.
 
 ### 6.4 Authentication and sessions
 
-- Better Auth, with tables in our Postgres via its Drizzle adapter.
-- Web: secure HTTP-only cookie session. Mobile: Better Auth's Expo integration with the token kept in secure storage.
+- Neon Auth (Managed Better Auth): users and sessions live in the `neon_auth` schema of our Postgres. The web app proxies to it with `@neon/auth` (ADR-023).
+- Web: secure HTTP-only cookie session. Mobile: Neon Auth client with the token kept in secure storage (Expo support to be verified in Phase 6, ADR-023).
 - Password rules: minimum 8 characters, checked against common passwords; rate-limited login; lockout after repeated failures.
 - Session is checked on every API call, together with the school's status (active, expired, deleted).
 

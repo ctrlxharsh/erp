@@ -40,4 +40,14 @@ If the constitution and the code disagree, stop and ask which one is right.
 - No Next.js Server Actions for data; all data goes through tRPC so mobile reuses it.
 
 ## Commands
-To be filled in when the monorepo is scaffolded (Phase 0).
+Requires Node 24+ and pnpm 12 (`packageManager` is pinned in `package.json`).
+
+| Command | What it does |
+|---|---|
+| `pnpm install` | Install all workspace dependencies |
+| `pnpm dev` | Run the web app at http://localhost:3000 |
+| `pnpm lint` / `pnpm lint:fix` | Biome check / apply safe fixes (Markdown is excluded) |
+| `pnpm typecheck` | TypeScript check in every package |
+| `pnpm test` | Vitest in every package that has tests |
+| `pnpm build` | Production build |
+| `pnpm check` | Lint, typecheck, test and build in one go (what CI runs) |
