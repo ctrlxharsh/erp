@@ -6,6 +6,7 @@ export const healthResponseSchema = z.object({
 export type HealthResponse = z.infer<typeof healthResponseSchema>;
 
 export * from "./files";
+export * from "./people";
 export * from "./platform";
 export * from "./session";
 export * from "./setup";

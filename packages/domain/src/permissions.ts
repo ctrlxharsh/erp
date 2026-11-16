@@ -31,6 +31,7 @@ export const permissions = [
   "people.view",
   "people.manage",
   "people.import",
+  "staff.view",
   // Daily work
   "timetable.view",
   "timetable.manage",
@@ -103,6 +104,7 @@ export const rolePermissions: Record<Role, readonly Permission[]> = {
     "people.view",
     "people.manage",
     "people.import",
+    "staff.view",
     "timetable.view",
     "timetable.manage",
     "attendance.view",
@@ -126,6 +128,7 @@ export const rolePermissions: Record<Role, readonly Permission[]> = {
   principal: [
     "school.view",
     "people.view",
+    "staff.view",
     "timetable.view",
     "attendance.view",
     "homework.view",

@@ -228,3 +228,169 @@ export const classSubjects = pgTable(
     index("class_subjects_school_id_idx").on(table.schoolId),
   ],
 );
+
+// ---------------------------------------------------------------------------------------------
+// People (Phase 1)
+// ---------------------------------------------------------------------------------------------
+
+export const gender = pgEnum("gender", ["female", "male", "other"]);
+export const personStatus = pgEnum("person_status", ["active", "left"]);
+export const staffKind = pgEnum("staff_kind", ["teacher", "non_teaching"]);
+
+/** A pupil. Their class for a given year lives in `student_enrolments`. */
+export const students = pgTable(
+  "students",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    admissionNo: text("admission_no").notNull(),
+    fullName: text("full_name").notNull(),
+    dateOfBirth: date("date_of_birth"),
+    gender: gender("gender"),
+    admissionDate: date("admission_date"),
+    status: personStatus("status").notNull().default("active"),
+    /** DPDP: the school records parental consent at admission (CONSTITUTION §11). */
+    consentRecordedAt: timestamp("consent_recorded_at", { withTimezone: true }),
+    consentRecordedBy: uuid("consent_recorded_by"),
+    /** Set when the student has their own login. */
+    userId: uuid("user_id"),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+    deletedAt: timestamp("deleted_at", { withTimezone: true }),
+  },
+  (table) => [unique("students_school_admission_unique").on(table.schoolId, table.admissionNo)],
+);
+
+/** Which section a student is in during one academic session. History is kept per session. */
+export const studentEnrolments = pgTable(
+  "student_enrolments",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    studentId: uuid("student_id")
+      .notNull()
+      .references(() => students.id),
+    academicSessionId: uuid("academic_session_id")
+      .notNull()
+      .references(() => academicSessions.id),
+    sectionId: uuid("section_id")
+      .notNull()
+      .references(() => sections.id),
+    rollNo: integer("roll_no"),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    unique("enrolments_student_session_unique").on(table.studentId, table.academicSessionId),
+    index("enrolments_section_idx").on(table.sectionId),
+    index("enrolments_school_idx").on(table.schoolId),
+  ],
+);
+
+/** A parent or guardian. One guardian can be linked to several children. */
+export const guardians = pgTable(
+  "guardians",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    fullName: text("full_name").notNull(),
+    email: text("email"),
+    phone: text("phone"),
+    userId: uuid("user_id"),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (table) => [
+    // The same email is the same person within a school.
+    uniqueIndex("guardians_school_email_unique")
+      .on(table.schoolId, sql`lower(${table.email})`)
+      .where(sql`${table.email} is not null`),
+  ],
+);
+
+export const studentGuardians = pgTable(
+  "student_guardians",
+  {
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    studentId: uuid("student_id")
+      .notNull()
+      .references(() => students.id),
+    guardianId: uuid("guardian_id")
+      .notNull()
+      .references(() => guardians.id),
+    relation: text("relation"),
+  },
+  (table) => [
+    primaryKey({ columns: [table.studentId, table.guardianId] }),
+    index("student_guardians_guardian_idx").on(table.guardianId),
+    index("student_guardians_school_idx").on(table.schoolId),
+  ],
+);
+
+/** Teachers and non-teaching staff. Staff have no portal yet (CONSTITUTION §9.7). */
+export const staff = pgTable(
+  "staff",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    kind: staffKind("kind").notNull(),
+    fullName: text("full_name").notNull(),
+    email: text("email"),
+    phone: text("phone"),
+    status: personStatus("status").notNull().default("active"),
+    userId: uuid("user_id"),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+    deletedAt: timestamp("deleted_at", { withTimezone: true }),
+  },
+  (table) => [
+    uniqueIndex("staff_school_email_unique")
+      .on(table.schoolId, sql`lower(${table.email})`)
+      .where(sql`${table.email} is not null`),
+  ],
+);
+
+/**
+ * Which teacher takes which section in a session. `subjectId` null means class teacher (daily
+ * attendance); otherwise it is a subject-section pair (marks, homework).
+ */
+export const teacherAssignments = pgTable(
+  "teacher_assignments",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    staffId: uuid("staff_id")
+      .notNull()
+      .references(() => staff.id),
+    academicSessionId: uuid("academic_session_id")
+      .notNull()
+      .references(() => academicSessions.id),
+    sectionId: uuid("section_id")
+      .notNull()
+      .references(() => sections.id),
+    subjectId: uuid("subject_id").references(() => subjects.id),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    index("teacher_assignments_staff_idx").on(table.staffId),
+    index("teacher_assignments_school_idx").on(table.schoolId),
+    // One class teacher per section per session; one teacher per subject-section per session.
+    uniqueIndex("teacher_assignments_class_teacher_unique")
+      .on(table.academicSessionId, table.sectionId)
+      .where(sql`${table.subjectId} is null`),
+    uniqueIndex("teacher_assignments_subject_unique")
+      .on(table.academicSessionId, table.sectionId, table.subjectId)
+      .where(sql`${table.subjectId} is not null`),
+  ],
+);

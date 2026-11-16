@@ -36,6 +36,13 @@
       "when": 1794837628712,
       "tag": "0004_dapper_leper_queen",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1794840174841,
+      "tag": "0005_odd_blacklash",
+      "breakpoints": true
     }
   ]
 }
