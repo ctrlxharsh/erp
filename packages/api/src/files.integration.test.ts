@@ -85,14 +85,14 @@ run("files pipeline (Neon database + Object Storage)", () => {
     if (upload.method === "POST") {
       const form = new FormData();
       for (const [name, value] of Object.entries(upload.fields)) form.append(name, value);
-      form.append("file", new Blob([bytes as BlobPart], { type: contentType }));
+      form.append("file", new Blob([bytes as never], { type: contentType }));
       const response = await fetch(upload.url, { method: "POST", body: form });
       expect(response.ok).toBe(true);
     } else {
       const response = await fetch(upload.url, {
         method: "PUT",
         headers: upload.headers,
-        body: bytes as BodyInit,
+        body: bytes as never,
       });
       expect(response.ok).toBe(true);
     }
