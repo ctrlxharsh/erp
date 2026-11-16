@@ -142,16 +142,16 @@ run("classwork", () => {
         consentConfirmed: true,
         guardians: [{ fullName: `${name} Parent`, email, phone: "", relation: "" }],
       });
-    asha = (await student("Asha Verma", "1", sectionA, "a@example.com")).id;
-    ravi = (await student("Ravi Kumar", "2", sectionB, "b@example.com")).id;
+    asha = (await student("Asha Verma", "1", sectionA, "classwork-a@example.com")).id;
+    ravi = (await student("Ravi Kumar", "2", sectionB, "classwork-b@example.com")).id;
     await db
       .update(schema.guardians)
       .set({ userId: parentA })
-      .where(inArray(schema.guardians.email, ["a@example.com"]));
+      .where(inArray(schema.guardians.email, ["classwork-a@example.com"]));
     await db
       .update(schema.guardians)
       .set({ userId: parentB })
-      .where(inArray(schema.guardians.email, ["b@example.com"]));
+      .where(inArray(schema.guardians.email, ["classwork-b@example.com"]));
     await db
       .update(schema.students)
       .set({ userId: studentUser })

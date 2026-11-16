@@ -765,3 +765,205 @@ export const notices = pgTable(
     unique("notices_school_ref_unique").on(table.schoolId, table.refNo),
   ],
 );
+
+// ---------------------------------------------------------------------------------------------
+// Exams, results and leave (Phase 3)
+// ---------------------------------------------------------------------------------------------
+
+/** A school's grade scale. Seeded with the CBSE 9-point scale on first use; the school may edit it. */
+export const gradeBands = pgTable(
+  "grade_bands",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    grade: text("grade").notNull(),
+    minPercent: integer("min_percent").notNull(),
+    gradePoint: integer("grade_point").notNull().default(0),
+  },
+  (table) => [
+    unique("grade_bands_school_grade_unique").on(table.schoolId, table.grade),
+    unique("grade_bands_school_min_unique").on(table.schoolId, table.minPercent),
+  ],
+);
+
+export const exams = pgTable(
+  "exams",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    academicSessionId: uuid("academic_session_id")
+      .notNull()
+      .references(() => academicSessions.id),
+    name: text("name").notNull(),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    unique("exams_school_session_name_unique").on(
+      table.schoolId,
+      table.academicSessionId,
+      table.name,
+    ),
+  ],
+);
+
+/** The schedule: which subjects a class sits in an exam, on which date, out of how many marks. */
+export const examSubjects = pgTable(
+  "exam_subjects",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    examId: uuid("exam_id")
+      .notNull()
+      .references(() => exams.id),
+    classId: uuid("class_id")
+      .notNull()
+      .references(() => classes.id),
+    subjectId: uuid("subject_id")
+      .notNull()
+      .references(() => subjects.id),
+    date: date("date").notNull(),
+    startTime: time("start_time"),
+    maxMarks: integer("max_marks").notNull(),
+  },
+  (table) => [
+    unique("exam_subjects_exam_class_subject_unique").on(
+      table.examId,
+      table.classId,
+      table.subjectId,
+    ),
+    index("exam_subjects_school_idx").on(table.schoolId),
+  ],
+);
+
+export const resultStatus = pgEnum("result_status", [
+  "draft",
+  "submitted",
+  "approved",
+  "rejected",
+  "published",
+]);
+
+/** The marks of one subject for one section in one exam, approved and published as a unit. */
+export const resultBatches = pgTable(
+  "result_batches",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    examId: uuid("exam_id")
+      .notNull()
+      .references(() => exams.id),
+    sectionId: uuid("section_id")
+      .notNull()
+      .references(() => sections.id),
+    subjectId: uuid("subject_id")
+      .notNull()
+      .references(() => subjects.id),
+    status: resultStatus("status").notNull().default("draft"),
+    submittedBy: uuid("submitted_by"),
+    decidedBy: uuid("decided_by"),
+    decisionComment: text("decision_comment"),
+    publishedAt: timestamp("published_at", { withTimezone: true }),
+    updatedAt: updatedAt(),
+  },
+  (table) => [
+    unique("result_batches_exam_section_subject_unique").on(
+      table.examId,
+      table.sectionId,
+      table.subjectId,
+    ),
+    index("result_batches_school_status_idx").on(table.schoolId, table.status),
+  ],
+);
+
+export const marks = pgTable(
+  "marks",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    batchId: uuid("batch_id")
+      .notNull()
+      .references(() => resultBatches.id),
+    studentId: uuid("student_id")
+      .notNull()
+      .references(() => students.id),
+    /** Null when the student was absent. */
+    marks: numeric("marks", { precision: 6, scale: 2 }),
+    absent: boolean("absent").notNull().default(false),
+  },
+  (table) => [
+    unique("marks_batch_student_unique").on(table.batchId, table.studentId),
+    index("marks_student_idx").on(table.studentId),
+    index("marks_school_idx").on(table.schoolId),
+  ],
+);
+
+export const leaveStatus = pgEnum("leave_status", ["pending", "approved", "rejected", "cancelled"]);
+
+export const leaveTypes = pgTable(
+  "leave_types",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    name: text("name").notNull(),
+  },
+  (table) => [unique("leave_types_school_name_unique").on(table.schoolId, table.name)],
+);
+
+/** A teacher's or staff member's leave application. Approval fills staff attendance with Leave. */
+export const leaveRequests = pgTable(
+  "leave_requests",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    staffId: uuid("staff_id")
+      .notNull()
+      .references(() => staff.id),
+    leaveTypeId: uuid("leave_type_id")
+      .notNull()
+      .references(() => leaveTypes.id),
+    fromDate: date("from_date").notNull(),
+    toDate: date("to_date").notNull(),
+    reason: text("reason").notNull(),
+    status: leaveStatus("status").notNull().default("pending"),
+    decidedBy: uuid("decided_by"),
+    decisionComment: text("decision_comment"),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    index("leave_requests_school_status_idx").on(table.schoolId, table.status),
+    index("leave_requests_staff_idx").on(table.staffId),
+  ],
+);
+
+export const leaveRequestFiles = pgTable(
+  "leave_request_files",
+  {
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    leaveRequestId: uuid("leave_request_id")
+      .notNull()
+      .references(() => leaveRequests.id),
+    fileId: uuid("file_id")
+      .notNull()
+      .references(() => files.id),
+  },
+  (table) => [
+    primaryKey({ columns: [table.leaveRequestId, table.fileId] }),
+    index("leave_request_files_school_idx").on(table.schoolId),
+  ],
+);

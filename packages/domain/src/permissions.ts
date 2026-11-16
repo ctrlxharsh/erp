@@ -55,6 +55,7 @@ export const permissions = [
   "notice.publish",
   // Exams
   "exams.view",
+  "exams.manage",
   "marks.enter",
   "marks.approve",
   "results.view_own",
@@ -121,6 +122,7 @@ export const rolePermissions: Record<Role, readonly Permission[]> = {
     "notice.view",
     "notice.write",
     "exams.view",
+    "exams.manage",
     "leave.apply",
     "complaints.raise",
     "fees.view",

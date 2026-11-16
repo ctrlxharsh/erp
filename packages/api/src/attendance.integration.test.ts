@@ -130,22 +130,32 @@ run("attendance", () => {
       });
     asha = (
       await student("Asha Verma", "1", [
-        { fullName: "Ravi Verma", email: "ravi@example.com", phone: "", relation: "Father" },
+        {
+          fullName: "Ravi Verma",
+          email: "attendance-ravi@example.com",
+          phone: "",
+          relation: "Father",
+        },
       ])
     ).id;
     ravi = (
       await student("Ravi Kumar", "2", [
-        { fullName: "Other Parent", email: "other@example.com", phone: "", relation: "Mother" },
+        {
+          fullName: "Other Parent",
+          email: "attendance-other@example.com",
+          phone: "",
+          relation: "Mother",
+        },
       ])
     ).id;
     await db
       .update(schema.guardians)
       .set({ userId: parentUser })
-      .where(inArray(schema.guardians.email, ["ravi@example.com"]));
+      .where(inArray(schema.guardians.email, ["attendance-ravi@example.com"]));
     await db
       .update(schema.guardians)
       .set({ userId: otherParent })
-      .where(inArray(schema.guardians.email, ["other@example.com"]));
+      .where(inArray(schema.guardians.email, ["attendance-other@example.com"]));
   });
 
   afterAll(async () => {

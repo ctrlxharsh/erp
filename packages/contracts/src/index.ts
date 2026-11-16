@@ -8,6 +8,7 @@ export type HealthResponse = z.infer<typeof healthResponseSchema>;
 export * from "./attendance";
 export * from "./classwork";
 export * from "./daily";
+export * from "./exams";
 export * from "./files";
 export * from "./notices";
 export * from "./people";
