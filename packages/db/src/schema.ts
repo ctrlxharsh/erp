@@ -1,6 +1,6 @@
 import { platformRoles, schoolRoles } from "@erp/domain";
 import { sql } from "drizzle-orm";
-import { index, pgEnum, pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
+import { index, jsonb, pgEnum, pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
 
 /**
  * Conventions (CONSTITUTION §6.8): UUID v7 primary keys (Postgres 18 `uuidv7()`), timestamptz,
@@ -59,5 +59,29 @@ export const memberships = pgTable(
   (table) => [
     unique("memberships_user_school_unique").on(table.userId, table.schoolId),
     index("memberships_school_id_idx").on(table.schoolId),
+  ],
+);
+
+/**
+ * Append-only audit log (CONSTITUTION §2.3). `school_id` is null for platform-level actions.
+ * A trigger blocks UPDATE and DELETE, even for the table owner (see the RLS migration).
+ */
+export const auditEvents = pgTable(
+  "audit_events",
+  {
+    id: id(),
+    schoolId: uuid("school_id").references(() => schools.id),
+    actorUserId: uuid("actor_user_id"),
+    /** Dotted verb such as `attendance.edit_after_window` or `auth.sign_in`. */
+    action: text("action").notNull(),
+    entityType: text("entity_type"),
+    entityId: text("entity_id"),
+    /** Context for the event. Never put passwords, tokens or children's personal data here. */
+    metadata: jsonb("metadata").$type<Record<string, unknown>>(),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    index("audit_events_school_created_idx").on(table.schoolId, table.createdAt),
+    index("audit_events_actor_idx").on(table.actorUserId),
   ],
 );
