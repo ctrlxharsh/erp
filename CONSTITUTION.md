@@ -538,7 +538,7 @@ Decisions still needed. Each one is resolved in `DECISIONS.md` before the phase 
 | 1 | Final product name: "ERP" is the working name; a distinctive brand name may replace it (one constant + assets to change) | Before first school goes live |
 | 2 | Production domain and email sending domain (SPF/DKIM) | Phase 0 (test), Phase 1 (prod) |
 | 3 | Neon Object Storage maturity, pricing and Singapore availability re-checked at scaffold time; fallback is any S3-compatible store | Phase 0 |
-| 4 | RLS with Drizzle + Neon driver: adopt or fall back to scoped layer + tests | Phase 0 |
+| 4 | ~~RLS with Drizzle + Neon driver~~ Adopted, see ADR-026 | Done |
 | 5 | Students without their own email: allow parent's email or keep student login off for them | Phase 1 |
 | 6 | Email volume and Resend plan (absence alerts and notices can be thousands per day) | Phase 2 |
 | 7 | Admit card blocking rules (e.g. fee dues) | Phase 3 |
