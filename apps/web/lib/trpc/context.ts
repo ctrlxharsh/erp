@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { createAuthAdmin } from "@/lib/auth/admin";
 import { auth } from "@/lib/auth/server";
 import { getDb } from "@/lib/db";
+import { createEmailSender } from "@/lib/email";
 
 let storage: ReturnType<typeof createNeonStorage> | undefined;
 function getStorage() {
@@ -23,6 +24,7 @@ export async function createContext(): Promise<Context> {
     db: getDb(),
     storage: getStorage(),
     authAdmin: createAuthAdmin(),
+    email: createEmailSender(),
     store: createAccessStore(getDb()),
     user,
     activeSchoolId: cookieStore.get(ACTIVE_SCHOOL_COOKIE)?.value ?? null,

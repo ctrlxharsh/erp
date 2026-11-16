@@ -57,6 +57,7 @@ run("people", () => {
     db,
     storage: null as never,
     authAdmin,
+    email: null as never,
     store: createAccessStore(db),
     user: { id: userId, email: `${userId}@example.com`, name: "Test" },
     activeSchoolId,

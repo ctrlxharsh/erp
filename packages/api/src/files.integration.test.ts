@@ -42,6 +42,7 @@ run("files pipeline (Neon database + Object Storage)", () => {
     db,
     storage,
     authAdmin: null as never,
+    email: null as never,
     store: createAccessStore(db),
     user: { id: userId, email: `${userId}@example.com`, name: "Test" },
     activeSchoolId,

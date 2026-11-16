@@ -11,7 +11,8 @@
     "schools": "Schools",
     "setup": "School setup",
     "students": "Students",
-    "staff": "Teachers and staff"
+    "staff": "Teachers and staff",
+    "calendar": "Calendar"
   },
   "shell": {
     "notifications": "Notifications",
@@ -23,7 +24,9 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "signingOut": "Signing out",
-    "noSchool": "No school linked"
+    "noSchool": "No school linked",
+    "markAllRead": "Mark all as read",
+    "unread": "{count} unread"
   },
   "today": {
     "title": "Today",
@@ -279,5 +282,47 @@
     "importDoneGuardians": "{guardians} parents added",
     "importConsent": "I confirm the school holds parental consent for all these students",
     "importFailed": "The import could not be completed"
+  },
+  "calendar": {
+    "title": "School calendar",
+    "addEvent": "Add event",
+    "import": "Import from Excel",
+    "previous": "Previous month",
+    "next": "Next month",
+    "empty": "Nothing scheduled this month.",
+    "eventTitle": "Title",
+    "start": "Start date",
+    "end": "End date",
+    "type": "Type",
+    "audience": "Who it is for",
+    "holiday": "Holiday",
+    "event": "Event",
+    "exam": "Exam",
+    "ptm": "Parent-teacher meeting",
+    "other": "Other",
+    "all": "Everyone",
+    "teachers": "Teachers",
+    "students_parents": "Students and parents",
+    "save": "Save event",
+    "saved": "Event saved",
+    "deleted": "Event deleted",
+    "delete": "Delete",
+    "deleteNamed": "Delete {name}?",
+    "cannotUndo": "This cannot be undone.",
+    "confirm": "Yes, delete",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "importTitle": "Import the calendar from Excel",
+    "downloadTemplate": "Download template",
+    "chooseFile": "Choose Excel file",
+    "checking": "Checking the file",
+    "rowsFound": "{count} events found",
+    "rowsOk": "{count} ready to import",
+    "rowsBad": "{count} rows need fixing",
+    "rowLabel": "Row {row}",
+    "fixAndRetry": "Fix these in your sheet, then upload it again. Nothing has been saved.",
+    "importNow": "Import {count} events",
+    "imported": "{count} events imported",
+    "back": "Back to calendar"
   }
 }

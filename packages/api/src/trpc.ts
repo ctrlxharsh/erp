@@ -4,6 +4,7 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { type AccessStore, resolveSchoolAccess } from "./access";
 import type { AuthAdmin } from "./auth-admin";
+import type { EmailSender } from "./email";
 import type { ObjectStorage } from "./storage";
 
 export interface SessionUser {
@@ -17,6 +18,7 @@ export interface Context {
   storage: ObjectStorage;
   store: AccessStore;
   authAdmin: AuthAdmin;
+  email: EmailSender;
   /** Null when signed out. Supplied by the web app from the Neon Auth session. */
   user: SessionUser | null;
   /** The school the user picked (cookie), if any. Verified against memberships, never trusted. */

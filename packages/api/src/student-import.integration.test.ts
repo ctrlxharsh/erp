@@ -43,6 +43,7 @@ run("student import", () => {
     db,
     storage: null as never,
     authAdmin: null as never,
+    email: null as never,
     store: createAccessStore(db),
     user: { id: userId, email: `${userId}@example.com`, name: "Test" },
     activeSchoolId: schoolId,

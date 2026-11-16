@@ -43,6 +43,7 @@ function ctx(over: Partial<Context> = {}): Context {
     db: null as never,
     storage: null as never,
     authAdmin: null as never,
+    email: null as never,
     store: store(),
     user,
     activeSchoolId: null,

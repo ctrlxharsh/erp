@@ -1,7 +1,7 @@
 import { classKey, MAX_IMPORT_ROWS, type RawStudentRow, studentImportColumns } from "@erp/domain";
 import ExcelJS from "exceljs";
 
-const asText = (value: ExcelJS.CellValue): string => {
+export const asText = (value: ExcelJS.CellValue): string => {
   if (value === null || value === undefined) return "";
   if (value instanceof Date) return value.toISOString().slice(0, 10);
   if (typeof value === "object") {

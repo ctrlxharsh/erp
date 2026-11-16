@@ -394,3 +394,60 @@ export const teacherAssignments = pgTable(
       .where(sql`${table.subjectId} is not null`),
   ],
 );
+
+// ---------------------------------------------------------------------------------------------
+// Daily work (Phase 2)
+// ---------------------------------------------------------------------------------------------
+
+export const calendarEventType = pgEnum("calendar_event_type", [
+  "holiday",
+  "event",
+  "exam",
+  "ptm",
+  "other",
+]);
+export const calendarAudience = pgEnum("calendar_audience", [
+  "all",
+  "teachers",
+  "students_parents",
+]);
+
+/** School calendar. Holidays block attendance marking. Dates are school-local days. */
+export const calendarEvents = pgTable(
+  "calendar_events",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    startDate: date("start_date").notNull(),
+    endDate: date("end_date").notNull(),
+    title: text("title").notNull(),
+    type: calendarEventType("type").notNull(),
+    audience: calendarAudience("audience").notNull().default("all"),
+    createdBy: uuid("created_by"),
+    createdAt: createdAt(),
+  },
+  (table) => [index("calendar_events_school_dates_idx").on(table.schoolId, table.startDate)],
+);
+
+/** In-app notifications. Each row belongs to one user in one school. */
+export const notifications = pgTable(
+  "notifications",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    userId: uuid("user_id").notNull(),
+    /** Dotted event name such as `attendance.absent`; decides the icon and email rules. */
+    kind: text("kind").notNull(),
+    title: text("title").notNull(),
+    body: text("body"),
+    /** App path to open, such as `/notices/123`. */
+    link: text("link"),
+    readAt: timestamp("read_at", { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (table) => [index("notifications_user_created_idx").on(table.userId, table.createdAt)],
+);

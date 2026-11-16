@@ -43,6 +43,13 @@
       "when": 1794840174841,
       "tag": "0005_odd_blacklash",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1794841233973,
+      "tag": "0006_lame_rick_jones",
+      "breakpoints": true
     }
   ]
 }
