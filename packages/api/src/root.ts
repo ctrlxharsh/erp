@@ -1,5 +1,6 @@
 import { attendanceRouter } from "./routers/attendance";
 import { calendarRouter } from "./routers/calendar";
+import { classworkRouter } from "./routers/classwork";
 import { filesRouter } from "./routers/files";
 import { homeRouter } from "./routers/home";
 import { notificationsRouter } from "./routers/notifications";
@@ -15,6 +16,7 @@ export const appRouter = router({
   session: sessionRouter,
   attendance: attendanceRouter,
   calendar: calendarRouter,
+  classwork: classworkRouter,
   files: filesRouter,
   home: homeRouter,
   notifications: notificationsRouter,

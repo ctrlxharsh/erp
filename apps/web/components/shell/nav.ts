@@ -1,12 +1,15 @@
 import type { Permission } from "@erp/domain";
 import {
+  BookOpen,
   CalendarCheck,
   CalendarDays,
   ClipboardCheck,
   Clock,
+  FolderOpen,
   GraduationCap,
   LayoutGrid,
   type LucideIcon,
+  NotebookPen,
   School,
   Settings,
   Users,
@@ -24,7 +27,10 @@ export interface NavItem {
     | "staff"
     | "calendar"
     | "timetable"
-    | "attendance";
+    | "attendance"
+    | "homework"
+    | "diary"
+    | "materials";
   icon: LucideIcon;
   /** Only shown to platform accounts (Super Admin, Platform Support). */
   platformOnly?: boolean;
@@ -44,6 +50,9 @@ export const navItems: NavItem[] = [
     icon: ClipboardCheck,
     permission: "attendance.view",
   },
+  { href: "/homework", labelKey: "homework", icon: NotebookPen, permission: "homework.view" },
+  { href: "/diary", labelKey: "diary", icon: BookOpen, permission: "diary.view" },
+  { href: "/materials", labelKey: "materials", icon: FolderOpen, permission: "material.view" },
   {
     href: "/people/students",
     labelKey: "students",

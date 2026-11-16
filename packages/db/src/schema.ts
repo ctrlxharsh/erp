@@ -6,6 +6,7 @@ import {
   index,
   integer,
   jsonb,
+  numeric,
   pgEnum,
   pgTable,
   primaryKey,
@@ -570,5 +571,147 @@ export const staffAttendance = pgTable(
   (table) => [
     unique("staff_attendance_staff_date_unique").on(table.staffId, table.date),
     index("staff_attendance_school_date_idx").on(table.schoolId, table.date),
+  ],
+);
+
+export const homeworkProgress = pgEnum("homework_progress", ["pending", "submitted", "late"]);
+
+/** Homework set by a teacher for one section and subject. Students do not submit in the app (ADR-012). */
+export const homework = pgTable(
+  "homework",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    academicSessionId: uuid("academic_session_id")
+      .notNull()
+      .references(() => academicSessions.id),
+    sectionId: uuid("section_id")
+      .notNull()
+      .references(() => sections.id),
+    subjectId: uuid("subject_id")
+      .notNull()
+      .references(() => subjects.id),
+    staffId: uuid("staff_id")
+      .notNull()
+      .references(() => staff.id),
+    title: text("title").notNull(),
+    details: text("details"),
+    dueDate: date("due_date").notNull(),
+    isGraded: boolean("is_graded").notNull().default(false),
+    maxMarks: integer("max_marks"),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    index("homework_section_due_idx").on(table.sectionId, table.dueDate),
+    index("homework_school_idx").on(table.schoolId),
+  ],
+);
+
+export const homeworkAttachments = pgTable(
+  "homework_attachments",
+  {
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    homeworkId: uuid("homework_id")
+      .notNull()
+      .references(() => homework.id),
+    fileId: uuid("file_id")
+      .notNull()
+      .references(() => files.id),
+  },
+  (table) => [
+    primaryKey({ columns: [table.homeworkId, table.fileId] }),
+    index("homework_attachments_school_idx").on(table.schoolId),
+  ],
+);
+
+/** The teacher's record per student: Pending, Submitted or Late, and marks if the homework is graded. */
+export const homeworkStatus = pgTable(
+  "homework_status",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    homeworkId: uuid("homework_id")
+      .notNull()
+      .references(() => homework.id),
+    studentId: uuid("student_id")
+      .notNull()
+      .references(() => students.id),
+    status: homeworkProgress("status").notNull().default("pending"),
+    marks: numeric("marks", { precision: 6, scale: 2 }),
+  },
+  (table) => [
+    unique("homework_status_homework_student_unique").on(table.homeworkId, table.studentId),
+    index("homework_status_student_idx").on(table.studentId),
+    index("homework_status_school_idx").on(table.schoolId),
+  ],
+);
+
+/** A teacher's daily log of what was covered, per section and subject. */
+export const classDiaryEntries = pgTable(
+  "class_diary_entries",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    academicSessionId: uuid("academic_session_id")
+      .notNull()
+      .references(() => academicSessions.id),
+    sectionId: uuid("section_id")
+      .notNull()
+      .references(() => sections.id),
+    subjectId: uuid("subject_id")
+      .notNull()
+      .references(() => subjects.id),
+    staffId: uuid("staff_id")
+      .notNull()
+      .references(() => staff.id),
+    date: date("date").notNull(),
+    topic: text("topic").notNull(),
+    notes: text("notes"),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    unique("class_diary_section_subject_date_unique").on(
+      table.sectionId,
+      table.subjectId,
+      table.date,
+    ),
+    index("class_diary_school_idx").on(table.schoolId),
+  ],
+);
+
+/** Study material (a PDF or image) shared with a class for a subject. */
+export const studyMaterials = pgTable(
+  "study_materials",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    classId: uuid("class_id")
+      .notNull()
+      .references(() => classes.id),
+    subjectId: uuid("subject_id")
+      .notNull()
+      .references(() => subjects.id),
+    staffId: uuid("staff_id")
+      .notNull()
+      .references(() => staff.id),
+    title: text("title").notNull(),
+    fileId: uuid("file_id")
+      .notNull()
+      .references(() => files.id),
+    createdAt: createdAt(),
+  },
+  (table) => [
+    index("study_materials_class_idx").on(table.classId),
+    index("study_materials_school_idx").on(table.schoolId),
   ],
 );

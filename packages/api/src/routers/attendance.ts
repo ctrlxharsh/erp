@@ -456,7 +456,7 @@ export const attendanceRouter = router({
 });
 
 /** Students see themselves, parents their own children, staff the sections they may see. */
-async function assertCanSeeStudent(
+export async function assertCanSeeStudent(
   scope: SchoolScope,
   ctx: { user: { id: string }; roles: readonly string[] },
   studentId: string,

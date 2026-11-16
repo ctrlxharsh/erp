@@ -64,6 +64,13 @@
       "when": 1794841698254,
       "tag": "0008_aspiring_monster_badoon",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1794842093800,
+      "tag": "0009_conscious_annihilus",
+      "breakpoints": true
     }
   ]
 }
