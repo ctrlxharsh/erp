@@ -203,3 +203,6 @@ Status values: `Accepted`, `Superseded by ADR-NNN`, `Proposed`.
 - **Deviations:** emails are plain text; React Email templates are not used yet. PDFs and images use the built-in Latin fonts, so Hindi text will not render until a font is bundled (Hindi UI is out of scope for now).
 - **Follow-ups:** email volume and the Resend plan (open item 6) need a decision before real schools use absence alerts; users cannot yet turn off non-essential emails; no push notifications.
 
+
+## Test accounts (local and test branch only)
+Five demo logins exist on the Neon `test` branch for manual testing: superadmin, schooladmin, principal, teacher and student at `@example.com`, linked to "Demo Public School". They are not for production. Passwords are in the team password manager, not in the repo.
