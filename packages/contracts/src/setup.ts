@@ -10,6 +10,7 @@ export const profileSchema = z.object({
   phone: z.string().nullable(),
   logoFileId: z.uuid().nullable(),
   timezone: z.string(),
+  noticeApprovalRequired: z.boolean(),
 });
 
 export const updateProfileInputSchema = z.object({
@@ -18,6 +19,7 @@ export const updateProfileInputSchema = z.object({
   affiliationNo: z.string().trim().max(40).default(""),
   phone: z.string().trim().max(20).default(""),
   logoFileId: z.uuid().nullable().default(null),
+  noticeApprovalRequired: z.boolean().default(true),
 });
 
 export const academicSessionSchema = z.object({

@@ -66,6 +66,7 @@ export const setupRouter = router({
           phone: profile?.phone ?? null,
           logoFileId: profile?.logoFileId ?? null,
           timezone: profile?.timezone ?? "Asia/Kolkata",
+          noticeApprovalRequired: profile?.noticeApprovalRequired ?? true,
         },
         sessions: sessions.map((s) => ({
           id: s.id,
@@ -120,6 +121,7 @@ export const setupRouter = router({
               affiliationNo: input.affiliationNo || null,
               phone: input.phone || null,
               logoFileId: input.logoFileId,
+              noticeApprovalRequired: input.noticeApprovalRequired,
             };
             await tx
               .insert(schema.schoolProfiles)

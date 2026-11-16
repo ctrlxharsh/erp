@@ -17,7 +17,8 @@
     "attendance": "Attendance",
     "homework": "Homework",
     "diary": "Class diary",
-    "materials": "Study material"
+    "materials": "Study material",
+    "notices": "Notices"
   },
   "shell": {
     "notifications": "Notifications",
@@ -195,7 +196,8 @@
     "noSubjects": "No subjects yet. Add the subjects your school teaches.",
     "subjectsSaved": "Subjects saved",
     "saveSubjects": "Save subjects",
-    "readOnly": "You can view this, but only the school admin can change it."
+    "readOnly": "You can view this, but only the school admin can change it.",
+    "noticeApproval": "Notices written by the school admin need the principal's approval before they are published"
   },
   "people": {
     "studentsTitle": "Students",
@@ -485,5 +487,53 @@
     "by": "{subject} · {teacher}",
     "fileFailed": "We could not upload this file.",
     "noAssignments": "No class and subject is assigned to you yet."
+  },
+  "notices": {
+    "title": "Notices",
+    "write": "Write a notice",
+    "tabPublished": "Published",
+    "tabMine": "My notices",
+    "tabApprovals": "To approve",
+    "empty": "No notices here yet.",
+    "emptyApprovals": "Nothing is waiting for your approval.",
+    "noticeTitle": "Title",
+    "body": "Notice",
+    "audience": "Who is it for",
+    "all": "Everyone",
+    "teachers": "Teachers and staff",
+    "students_parents": "Students and parents",
+    "saveDraft": "Save draft",
+    "draftSaved": "Draft saved",
+    "send": "Send for approval",
+    "publishNow": "Publish",
+    "sentForApproval": "Sent to the principal for approval",
+    "publishedNow": "Notice published",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteNamed": "Delete {name}?",
+    "cannotUndo": "This cannot be undone.",
+    "confirm": "Yes, delete",
+    "cancel": "Cancel",
+    "approve": "Approve and publish",
+    "reject": "Send back",
+    "rejectReason": "Why is it being sent back?",
+    "rejectConfirm": "Send back to author",
+    "approved": "Notice approved and published",
+    "rejected": "Notice sent back",
+    "status": "Status",
+    "draft": "Draft",
+    "pending_approval": "Pending approval",
+    "published": "Published",
+    "rejectedStatus": "Rejected",
+    "by": "By {name}",
+    "ref": "Ref {ref}",
+    "sentBack": "Sent back: {comment}",
+    "viewPdf": "Open as PDF",
+    "shareWhatsApp": "Share on WhatsApp",
+    "sharing": "Preparing",
+    "shareText": "{title}",
+    "shareFailed": "We could not prepare the image to share.",
+    "back": "Back to notices",
+    "approvalNeeded": "This notice will go to the principal for approval before it is published."
   }
 }

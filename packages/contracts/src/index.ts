@@ -9,6 +9,7 @@ export * from "./attendance";
 export * from "./classwork";
 export * from "./daily";
 export * from "./files";
+export * from "./notices";
 export * from "./people";
 export * from "./platform";
 export * from "./session";

@@ -71,6 +71,13 @@
       "when": 1794842093800,
       "tag": "0009_conscious_annihilus",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1794842426553,
+      "tag": "0010_sleepy_lockjaw",
+      "breakpoints": true
     }
   ]
 }

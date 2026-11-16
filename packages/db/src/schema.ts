@@ -140,6 +140,8 @@ export const schoolProfiles = pgTable("school_profiles", {
   /** The school's logo; the file itself is in private object storage. */
   logoFileId: uuid("logo_file_id").references(() => files.id),
   timezone: text("timezone").notNull().default("Asia/Kolkata"),
+  /** When true, notices written by the School Admin need the Principal's approval (ADR-013). */
+  noticeApprovalRequired: boolean("notice_approval_required").notNull().default(true),
   updatedAt: updatedAt(),
 });
 
@@ -713,5 +715,53 @@ export const studyMaterials = pgTable(
   (table) => [
     index("study_materials_class_idx").on(table.classId),
     index("study_materials_school_idx").on(table.schoolId),
+  ],
+);
+
+/** School-scoped running numbers (notice references now, receipts later). Increment atomically. */
+export const counters = pgTable(
+  "counters",
+  {
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    key: text("key").notNull(),
+    value: integer("value").notNull().default(0),
+  },
+  (table) => [primaryKey({ columns: [table.schoolId, table.key] })],
+);
+
+export const noticeStatus = pgEnum("notice_status", [
+  "draft",
+  "pending_approval",
+  "published",
+  "rejected",
+]);
+export const noticeAudience = pgEnum("notice_audience", ["all", "teachers", "students_parents"]);
+
+export const notices = pgTable(
+  "notices",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    /** Assigned when the notice is published. */
+    refNo: integer("ref_no"),
+    refLabel: text("ref_label"),
+    title: text("title").notNull(),
+    body: text("body").notNull(),
+    audience: noticeAudience("audience").notNull().default("all"),
+    status: noticeStatus("status").notNull().default("draft"),
+    createdBy: uuid("created_by").notNull(),
+    decidedBy: uuid("decided_by"),
+    decisionComment: text("decision_comment"),
+    publishedAt: timestamp("published_at", { withTimezone: true }),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (table) => [
+    index("notices_school_status_idx").on(table.schoolId, table.status),
+    unique("notices_school_ref_unique").on(table.schoolId, table.refNo),
   ],
 );

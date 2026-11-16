@@ -3,6 +3,7 @@ import { calendarRouter } from "./routers/calendar";
 import { classworkRouter } from "./routers/classwork";
 import { filesRouter } from "./routers/files";
 import { homeRouter } from "./routers/home";
+import { noticesRouter } from "./routers/notices";
 import { notificationsRouter } from "./routers/notifications";
 import { peopleRouter } from "./routers/people";
 import { platformRouter } from "./routers/platform";
@@ -19,6 +20,7 @@ export const appRouter = router({
   classwork: classworkRouter,
   files: filesRouter,
   home: homeRouter,
+  notices: noticesRouter,
   notifications: notificationsRouter,
   people: peopleRouter,
   platform: platformRouter,

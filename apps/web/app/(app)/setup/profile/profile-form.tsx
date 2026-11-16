@@ -47,6 +47,7 @@ export function ProfileForm() {
       affiliationNo: profile.affiliationNo ?? "",
       phone: profile.phone ?? "",
       logoFileId: profile.logoFileId,
+      noticeApprovalRequired: profile.noticeApprovalRequired,
     });
     setLogoFileId(profile.logoFileId);
   }, [profile, reset]);
@@ -97,6 +98,10 @@ export function ProfileForm() {
         <Label htmlFor="phone">{t("phone")}</Label>
         <Input id="phone" type="tel" {...register("phone")} />
       </div>
+      <label className="flex min-h-10 items-start gap-2 text-sm">
+        <input type="checkbox" className="mt-1 size-4" {...register("noticeApprovalRequired")} />
+        {t("noticeApproval")}
+      </label>
       <div className="flex flex-col gap-2">
         <Label htmlFor="logo">{t("logo")}</Label>
         <div className="flex items-center gap-3">

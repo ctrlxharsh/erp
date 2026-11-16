@@ -17,7 +17,7 @@ A simple, clean school management platform for Indian schools. Built by **PastAn
 
 ## Status
 
-Phases 0 (foundation) and 1 (people) are complete: scaffold, design system and app shell, Neon Auth, permissions, tenant isolation (RLS), audit log, private file pipeline, Super Admin school management, school setup, students and parents, teachers and staff with class assignments, Excel student import, invites and role home screens. Next: Phase 2, daily work (see CONSTITUTION §15).
+Phases 0 (foundation), 1 (people) and 2 (daily work) are complete: scaffold, design system and app shell, Neon Auth, permissions, tenant isolation (RLS), audit log, private file pipeline, Super Admin school management, school setup, students and parents, teachers and staff with class assignments, Excel student import, invites and role home screens. Phase 2 adds the timetable, student and staff attendance with absence alerts, homework, class diary, study material, the school calendar, notices with approval (PDF and WhatsApp image) and notifications. Next: Phase 3, exams and leave (see CONSTITUTION §15).
 
 ## Getting started
 

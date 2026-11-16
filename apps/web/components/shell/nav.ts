@@ -9,6 +9,7 @@ import {
   GraduationCap,
   LayoutGrid,
   type LucideIcon,
+  Megaphone,
   NotebookPen,
   School,
   Settings,
@@ -30,7 +31,8 @@ export interface NavItem {
     | "attendance"
     | "homework"
     | "diary"
-    | "materials";
+    | "materials"
+    | "notices";
   icon: LucideIcon;
   /** Only shown to platform accounts (Super Admin, Platform Support). */
   platformOnly?: boolean;
@@ -53,6 +55,7 @@ export const navItems: NavItem[] = [
   { href: "/homework", labelKey: "homework", icon: NotebookPen, permission: "homework.view" },
   { href: "/diary", labelKey: "diary", icon: BookOpen, permission: "diary.view" },
   { href: "/materials", labelKey: "materials", icon: FolderOpen, permission: "material.view" },
+  { href: "/notices", labelKey: "notices", icon: Megaphone, permission: "notice.view" },
   {
     href: "/people/students",
     labelKey: "students",
