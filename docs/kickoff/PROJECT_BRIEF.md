@@ -1,3 +1,5 @@
+> **Historical.** This was the kickoff brief. It is superseded by [`CONSTITUTION.md`](../../CONSTITUTION.md) and [`DECISIONS.md`](../DECISIONS.md).
+
 # School ERP — Project Brief
 
 > Starting context for Claude Code. Status: planning / pre-scaffold. Updated: 2026-11-16.
