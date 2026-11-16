@@ -11,3 +11,4 @@ export * from "./people";
 export * from "./platform";
 export * from "./session";
 export * from "./setup";
+export * from "./timetable";

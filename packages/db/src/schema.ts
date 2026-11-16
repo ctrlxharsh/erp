@@ -10,6 +10,7 @@ import {
   pgTable,
   primaryKey,
   text,
+  time,
   timestamp,
   unique,
   uniqueIndex,
@@ -450,4 +451,55 @@ export const notifications = pgTable(
     createdAt: createdAt(),
   },
   (table) => [index("notifications_user_created_idx").on(table.userId, table.createdAt)],
+);
+
+/** A teaching slot of the school day, shared by every weekday and section (for example "Period 1"). */
+export const timetablePeriods = pgTable(
+  "timetable_periods",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    name: text("name").notNull(),
+    startTime: time("start_time").notNull(),
+    endTime: time("end_time").notNull(),
+    sortOrder: integer("sort_order").notNull().default(0),
+  },
+  (table) => [unique("timetable_periods_school_name_unique").on(table.schoolId, table.name)],
+);
+
+/** Which subject and teacher a section has in a period on a weekday (1 = Monday ... 7 = Sunday). */
+export const timetableEntries = pgTable(
+  "timetable_entries",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    academicSessionId: uuid("academic_session_id")
+      .notNull()
+      .references(() => academicSessions.id),
+    sectionId: uuid("section_id")
+      .notNull()
+      .references(() => sections.id),
+    weekday: integer("weekday").notNull(),
+    periodId: uuid("period_id")
+      .notNull()
+      .references(() => timetablePeriods.id),
+    subjectId: uuid("subject_id")
+      .notNull()
+      .references(() => subjects.id),
+    staffId: uuid("staff_id").references(() => staff.id),
+  },
+  (table) => [
+    unique("timetable_entries_slot_unique").on(
+      table.academicSessionId,
+      table.sectionId,
+      table.weekday,
+      table.periodId,
+    ),
+    index("timetable_entries_staff_idx").on(table.staffId),
+    index("timetable_entries_school_idx").on(table.schoolId),
+  ],
 );

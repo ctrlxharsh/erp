@@ -200,7 +200,16 @@ export const homeSummarySchema = z.object({
       subjects: z.array(z.string()),
     }),
   ),
-  children: z.array(z.object({ id: z.uuid(), fullName: z.string(), label: z.string().nullable() })),
-  me: z.object({ fullName: z.string(), label: z.string().nullable() }).nullable(),
+  children: z.array(
+    z.object({
+      id: z.uuid(),
+      fullName: z.string(),
+      label: z.string().nullable(),
+      sectionId: z.uuid().nullable(),
+    }),
+  ),
+  me: z
+    .object({ fullName: z.string(), label: z.string().nullable(), sectionId: z.uuid().nullable() })
+    .nullable(),
 });
 export type HomeSummary = z.infer<typeof homeSummarySchema>;

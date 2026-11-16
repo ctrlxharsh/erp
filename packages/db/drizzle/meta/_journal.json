@@ -50,6 +50,13 @@
       "when": 1794841233973,
       "tag": "0006_lame_rick_jones",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1794841460299,
+      "tag": "0007_classy_shard",
+      "breakpoints": true
     }
   ]
 }

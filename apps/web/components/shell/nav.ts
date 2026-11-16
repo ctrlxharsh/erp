@@ -2,6 +2,7 @@ import type { Permission } from "@erp/domain";
 import {
   CalendarCheck,
   CalendarDays,
+  Clock,
   GraduationCap,
   LayoutGrid,
   type LucideIcon,
@@ -13,7 +14,15 @@ import {
 export interface NavItem {
   href: string;
   /** Key under `nav.` in the message catalog. */
-  labelKey: "today" | "components" | "schools" | "setup" | "students" | "staff" | "calendar";
+  labelKey:
+    | "today"
+    | "components"
+    | "schools"
+    | "setup"
+    | "students"
+    | "staff"
+    | "calendar"
+    | "timetable";
   icon: LucideIcon;
   /** Only shown to platform accounts (Super Admin, Platform Support). */
   platformOnly?: boolean;
@@ -26,6 +35,7 @@ export const navItems: NavItem[] = [
   { href: "/", labelKey: "today", icon: CalendarCheck },
   { href: "/platform/schools", labelKey: "schools", icon: School, platformOnly: true },
   { href: "/calendar", labelKey: "calendar", icon: CalendarDays, permission: "calendar.view" },
+  { href: "/timetable", labelKey: "timetable", icon: Clock, permission: "timetable.view" },
   {
     href: "/people/students",
     labelKey: "students",

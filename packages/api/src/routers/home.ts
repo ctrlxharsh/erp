@@ -86,12 +86,18 @@ export const homeRouter = router({
         }
 
         // Parent: their linked children (a child switcher comes with the parent screens).
-        const children: { id: string; fullName: string; label: string | null }[] = [];
+        const children: {
+          id: string;
+          fullName: string;
+          label: string | null;
+          sectionId: string | null;
+        }[] = [];
         if (ctx.roles.includes("parent")) {
           const rows = await tx
             .select({
               id: schema.students.id,
               fullName: schema.students.fullName,
+              sectionId: schema.sections.id,
               className: schema.classes.name,
               sectionName: schema.sections.name,
             })
@@ -123,16 +129,18 @@ export const homeRouter = router({
               id: r.id,
               fullName: r.fullName,
               label: label(r.className, r.sectionName),
+              sectionId: r.sectionId,
             })),
           );
         }
 
         // Student: their own class.
-        let me: { fullName: string; label: string | null } | null = null;
+        let me: { fullName: string; label: string | null; sectionId: string | null } | null = null;
         if (ctx.roles.includes("student")) {
           const [row] = await tx
             .select({
               fullName: schema.students.fullName,
+              sectionId: schema.sections.id,
               className: schema.classes.name,
               sectionName: schema.sections.name,
             })
@@ -147,7 +155,12 @@ export const homeRouter = router({
             .leftJoin(schema.sections, eq(schema.sections.id, schema.studentEnrolments.sectionId))
             .leftJoin(schema.classes, eq(schema.classes.id, schema.sections.classId))
             .where(eq(schema.students.userId, ctx.user.id));
-          if (row) me = { fullName: row.fullName, label: label(row.className, row.sectionName) };
+          if (row)
+            me = {
+              fullName: row.fullName,
+              label: label(row.className, row.sectionName),
+              sectionId: row.sectionId,
+            };
         }
         return { counts, mySections, children, me };
       }),

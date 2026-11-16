@@ -7,6 +7,7 @@ import { platformRouter } from "./routers/platform";
 import { schoolRouter } from "./routers/school";
 import { sessionRouter } from "./routers/session";
 import { setupRouter } from "./routers/setup";
+import { timetableRouter } from "./routers/timetable";
 import { createCallerFactory, router } from "./trpc";
 
 export const appRouter = router({
@@ -19,6 +20,7 @@ export const appRouter = router({
   platform: platformRouter,
   school: schoolRouter,
   setup: setupRouter,
+  timetable: timetableRouter,
 });
 
 export type AppRouter = typeof appRouter;
