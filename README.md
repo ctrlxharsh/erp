@@ -17,7 +17,7 @@ A simple, clean school management platform for Indian schools. Built by **PastAn
 
 ## Status
 
-Phase 0 (foundation) is complete: scaffold, design system and app shell, Neon Auth, permissions, tenant isolation (RLS), audit log, private file pipeline, Super Admin school management, and school setup (profile and logo, sessions, classes, sections, subjects). Next: Phase 1, people (see CONSTITUTION §15).
+Phases 0 (foundation) and 1 (people) are complete: scaffold, design system and app shell, Neon Auth, permissions, tenant isolation (RLS), audit log, private file pipeline, Super Admin school management, school setup, students and parents, teachers and staff with class assignments, Excel student import, invites and role home screens. Next: Phase 2, daily work (see CONSTITUTION §15).
 
 ## Getting started
 

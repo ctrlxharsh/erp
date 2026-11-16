@@ -1,4 +1,5 @@
 import { filesRouter } from "./routers/files";
+import { homeRouter } from "./routers/home";
 import { peopleRouter } from "./routers/people";
 import { platformRouter } from "./routers/platform";
 import { schoolRouter } from "./routers/school";
@@ -9,6 +10,7 @@ import { createCallerFactory, router } from "./trpc";
 export const appRouter = router({
   session: sessionRouter,
   files: filesRouter,
+  home: homeRouter,
   people: peopleRouter,
   platform: platformRouter,
   school: schoolRouter,

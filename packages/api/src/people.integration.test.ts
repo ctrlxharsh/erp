@@ -367,6 +367,29 @@ run("people", () => {
     expect(membership?.roles).toEqual(["teacher"]);
   });
 
+  it("builds the Today summary for each role", async () => {
+    // The parent of "Brother One" and "Brother Two" (same guardian record).
+    await db
+      .update(schema.guardians)
+      .set({ userId: parent })
+      .where(inArray(schema.guardians.schoolId, [schoolA]));
+    const adminHome = await createCaller(as(admin, schoolA)).home.summary();
+    expect(adminHome.counts?.classes).toBe(1);
+    expect(adminHome.counts?.students).toBeGreaterThanOrEqual(3);
+    expect(adminHome.counts?.teachers).toBeGreaterThanOrEqual(2);
+
+    const teacherHome = await createCaller(as(classTeacher, schoolA)).home.summary();
+    expect(teacherHome.counts).toBeNull();
+    expect(teacherHome.mySections).toEqual([
+      expect.objectContaining({ label: "Class 6 A", isClassTeacher: true }),
+    ]);
+
+    const parentHome = await createCaller(as(parent, schoolA)).home.summary();
+    expect(parentHome.counts).toBeNull();
+    expect(parentHome.children.map((c) => c.fullName)).toContain("Brother One");
+    expect(parentHome.children.find((c) => c.fullName === "Brother Two")?.label).toBe("Class 6 B");
+  });
+
   it("never shows or changes another school's people", async () => {
     const b = createCaller(as(adminB, schoolB));
     await b.setup.createSession({
