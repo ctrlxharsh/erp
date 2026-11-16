@@ -1,3 +1,4 @@
+export * from "./attendance";
 export * from "./calendar";
 export * from "./files";
 export { formatPaise } from "./money";

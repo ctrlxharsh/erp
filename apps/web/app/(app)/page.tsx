@@ -147,11 +147,16 @@ export default async function TodayPage() {
             ) : (
               <ul className="flex flex-col gap-2">
                 {home.children.map((child) => (
-                  <li key={child.id} className="rounded-md border border-border px-3 py-2">
-                    <p className="font-medium">{child.fullName}</p>
-                    {child.label ? (
-                      <p className="text-sm text-muted-foreground">{child.label}</p>
-                    ) : null}
+                  <li key={child.id}>
+                    <Link
+                      href={`/attendance/student/${child.id}`}
+                      className="block rounded-md border border-border px-3 py-2 hover:bg-muted"
+                    >
+                      <p className="font-medium">{child.fullName}</p>
+                      {child.label ? (
+                        <p className="text-sm text-muted-foreground">{child.label}</p>
+                      ) : null}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -166,10 +171,12 @@ export default async function TodayPage() {
             <CardTitle>{t("myClass")}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="font-medium">{home.me.fullName}</p>
-            {home.me.label ? (
-              <p className="text-sm text-muted-foreground">{home.me.label}</p>
-            ) : null}
+            <Link href="/attendance/student/me" className="block hover:underline">
+              <p className="font-medium">{home.me.fullName}</p>
+              {home.me.label ? (
+                <p className="text-sm text-muted-foreground">{home.me.label}</p>
+              ) : null}
+            </Link>
           </CardContent>
         </Card>
       ) : null}

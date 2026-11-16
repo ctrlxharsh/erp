@@ -2,6 +2,7 @@ import type { Permission } from "@erp/domain";
 import {
   CalendarCheck,
   CalendarDays,
+  ClipboardCheck,
   Clock,
   GraduationCap,
   LayoutGrid,
@@ -22,7 +23,8 @@ export interface NavItem {
     | "students"
     | "staff"
     | "calendar"
-    | "timetable";
+    | "timetable"
+    | "attendance";
   icon: LucideIcon;
   /** Only shown to platform accounts (Super Admin, Platform Support). */
   platformOnly?: boolean;
@@ -36,6 +38,12 @@ export const navItems: NavItem[] = [
   { href: "/platform/schools", labelKey: "schools", icon: School, platformOnly: true },
   { href: "/calendar", labelKey: "calendar", icon: CalendarDays, permission: "calendar.view" },
   { href: "/timetable", labelKey: "timetable", icon: Clock, permission: "timetable.view" },
+  {
+    href: "/attendance",
+    labelKey: "attendance",
+    icon: ClipboardCheck,
+    permission: "attendance.view",
+  },
   {
     href: "/people/students",
     labelKey: "students",

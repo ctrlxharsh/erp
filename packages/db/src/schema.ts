@@ -503,3 +503,72 @@ export const timetableEntries = pgTable(
     index("timetable_entries_school_idx").on(table.schoolId),
   ],
 );
+
+export const attendanceStatus = pgEnum("attendance_status", ["present", "absent", "leave", "late"]);
+
+/** One row per section per day: the day's register. Individual marks are `attendance_records`. */
+export const attendanceDays = pgTable(
+  "attendance_days",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    academicSessionId: uuid("academic_session_id")
+      .notNull()
+      .references(() => academicSessions.id),
+    sectionId: uuid("section_id")
+      .notNull()
+      .references(() => sections.id),
+    date: date("date").notNull(),
+    markedBy: uuid("marked_by").notNull(),
+    markedAt: timestamp("marked_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    unique("attendance_days_section_date_unique").on(table.sectionId, table.date),
+    index("attendance_days_school_date_idx").on(table.schoolId, table.date),
+  ],
+);
+
+export const attendanceRecords = pgTable(
+  "attendance_records",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    attendanceDayId: uuid("attendance_day_id")
+      .notNull()
+      .references(() => attendanceDays.id),
+    studentId: uuid("student_id")
+      .notNull()
+      .references(() => students.id),
+    status: attendanceStatus("status").notNull(),
+  },
+  (table) => [
+    unique("attendance_records_day_student_unique").on(table.attendanceDayId, table.studentId),
+    index("attendance_records_student_idx").on(table.studentId),
+    index("attendance_records_school_idx").on(table.schoolId),
+  ],
+);
+
+/** Daily attendance of teachers and non-teaching staff, entered by the School Admin. */
+export const staffAttendance = pgTable(
+  "staff_attendance",
+  {
+    id: id(),
+    schoolId: uuid("school_id")
+      .notNull()
+      .references(() => schools.id),
+    staffId: uuid("staff_id")
+      .notNull()
+      .references(() => staff.id),
+    date: date("date").notNull(),
+    status: attendanceStatus("status").notNull(),
+    markedBy: uuid("marked_by").notNull(),
+  },
+  (table) => [
+    unique("staff_attendance_staff_date_unique").on(table.staffId, table.date),
+    index("staff_attendance_school_date_idx").on(table.schoolId, table.date),
+  ],
+);

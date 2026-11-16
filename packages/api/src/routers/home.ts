@@ -135,10 +135,16 @@ export const homeRouter = router({
         }
 
         // Student: their own class.
-        let me: { fullName: string; label: string | null; sectionId: string | null } | null = null;
+        let me: {
+          id: string;
+          fullName: string;
+          label: string | null;
+          sectionId: string | null;
+        } | null = null;
         if (ctx.roles.includes("student")) {
           const [row] = await tx
             .select({
+              id: schema.students.id,
               fullName: schema.students.fullName,
               sectionId: schema.sections.id,
               className: schema.classes.name,
@@ -157,6 +163,7 @@ export const homeRouter = router({
             .where(eq(schema.students.userId, ctx.user.id));
           if (row)
             me = {
+              id: row.id,
               fullName: row.fullName,
               label: label(row.className, row.sectionName),
               sectionId: row.sectionId,

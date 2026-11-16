@@ -209,7 +209,12 @@ export const homeSummarySchema = z.object({
     }),
   ),
   me: z
-    .object({ fullName: z.string(), label: z.string().nullable(), sectionId: z.uuid().nullable() })
+    .object({
+      id: z.uuid(),
+      fullName: z.string(),
+      label: z.string().nullable(),
+      sectionId: z.uuid().nullable(),
+    })
     .nullable(),
 });
 export type HomeSummary = z.infer<typeof homeSummarySchema>;

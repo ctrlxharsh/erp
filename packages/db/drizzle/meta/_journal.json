@@ -57,6 +57,13 @@
       "when": 1794841460299,
       "tag": "0007_classy_shard",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1794841698254,
+      "tag": "0008_aspiring_monster_badoon",
+      "breakpoints": true
     }
   ]
 }

@@ -1,3 +1,4 @@
+import { attendanceRouter } from "./routers/attendance";
 import { calendarRouter } from "./routers/calendar";
 import { filesRouter } from "./routers/files";
 import { homeRouter } from "./routers/home";
@@ -12,6 +13,7 @@ import { createCallerFactory, router } from "./trpc";
 
 export const appRouter = router({
   session: sessionRouter,
+  attendance: attendanceRouter,
   calendar: calendarRouter,
   files: filesRouter,
   home: homeRouter,
