@@ -43,7 +43,7 @@ export function GradesPanel() {
       <p className="text-muted-foreground">{t("intro")}</p>
       <div className="overflow-x-auto">
         <ul className="flex min-w-[26rem] flex-col gap-2">
-          <li className="grid grid-cols-[1fr_1fr_1fr_auto] gap-2 text-sm font-medium">
+          <li className="grid grid-cols-[1fr_1fr_1fr_5rem] gap-2 text-sm font-medium">
             <span>{t("grade")}</span>
             <span>{t("from")}</span>
             <span>{t("points")}</span>
@@ -51,7 +51,7 @@ export function GradesPanel() {
           </li>
           {bands.map((band, index) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: rows are edited in place
-            <li key={index} className="grid grid-cols-[1fr_1fr_1fr_auto] items-center gap-2">
+            <li key={index} className="grid grid-cols-[1fr_1fr_1fr_5rem] items-center gap-2">
               <Input
                 aria-label={t("grade")}
                 value={band.grade}
