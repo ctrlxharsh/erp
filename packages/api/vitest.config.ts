@@ -9,6 +9,7 @@ try {
 }
 
 export default defineConfig({
-  // Integration tests share one Neon branch; a few at a time keeps connections stable.
-  test: { testTimeout: 60_000, hookTimeout: 120_000, maxWorkers: 1 },
+  // Each procedure call costs several network round trips to Neon, so files run in parallel (4 at a
+  // time was stable; more risks dropped connections on the shared test branch).
+  test: { testTimeout: 60_000, hookTimeout: 120_000, maxWorkers: 4 },
 });

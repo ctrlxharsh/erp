@@ -28,8 +28,10 @@ export async function withSchool<T>(
 ): Promise<T> {
   if (!uuidPattern.test(schoolId)) throw new Error("withSchool needs a valid school id");
   return db.transaction(async (tx) => {
-    await tx.execute(sql`select set_config('app.school_id', ${schoolId}, true)`);
-    await tx.execute(sql`set local role erp_app`);
+    // One round trip for both settings. `set_config('role', ..., true)` is `SET LOCAL ROLE`.
+    await tx.execute(
+      sql`select set_config('app.school_id', ${schoolId}, true), set_config('role', 'erp_app', true)`,
+    );
     return fn({ schoolId, tx });
   });
 }

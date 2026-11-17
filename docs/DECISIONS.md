@@ -213,7 +213,7 @@ Status values: `Accepted`, `Superseded by ADR-NNN`, `Proposed`.
   - **Report cards (open item 8):** a simple CBSE-style layout with scholastic marks and grade per subject. No co-scholastic grading or weighted finals (out of scope in the constitution).
   - **PDFs:** admit and report cards use `@react-pdf/renderer` with the school header shared with notices, and go through the same permission checks as the app.
   - **Leave:** teachers and staff apply and may cancel while pending; the Principal approves or rejects with a reason. Approval writes "Leave" into the staff attendance register for working days, skipping Sundays and holidays. The procedure is named `leave.submit` because tRPC reserves `apply`.
-- **Deviations:** API integration tests run with one worker (`maxWorkers: 1`) because many files share one Neon branch.
+- **Deviations:** API integration tests run 4 files at a time (`maxWorkers: 4`); the suite takes about 90 seconds, versus about 7 minutes on one worker. Time is spent on network round trips to Neon (about 100 ms each from a dev machine), not on computation. The per-request tenant settings are now one statement instead of two.
 - **Follow-ups:** Hindi text in PDFs needs a bundled font; no email on leave decisions yet.
 
 
