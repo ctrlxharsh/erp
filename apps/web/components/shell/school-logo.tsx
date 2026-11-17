@@ -1,4 +1,4 @@
-/** Shows a logo image, or the school's initials on a navy tile when there is no logo. */
+/** Shows a logo image, or the school's initials on a white tile (it sits on the navy top bar) when there is no logo. */
 export function SchoolLogo({
   name,
   logoSrc,
@@ -17,7 +17,7 @@ export function SchoolLogo({
         alt=""
         width={size}
         height={size}
-        className="shrink-0 rounded-md object-contain"
+        className="shrink-0 rounded-md bg-background object-contain p-0.5"
       />
     );
   }
@@ -31,7 +31,7 @@ export function SchoolLogo({
     <span
       aria-hidden="true"
       style={{ width: size, height: size }}
-      className="flex shrink-0 items-center justify-center rounded-md bg-primary text-sm font-semibold text-primary-foreground"
+      className="flex shrink-0 items-center justify-center rounded-md bg-background text-sm font-bold text-primary"
     >
       {initials}
     </span>

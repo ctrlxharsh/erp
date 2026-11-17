@@ -131,7 +131,7 @@ export function ERPDataTable<T>({
         </DropdownMenu>
       </div>
 
-      <div className="overflow-x-auto rounded-md border border-border">
+      <div className="overflow-x-auto rounded-lg border border-border bg-background">
         <table aria-label={label} aria-busy={isLoading} className="w-full text-left text-sm">
           <thead className="bg-surface">
             {table.getHeaderGroups().map((group) => (
@@ -148,7 +148,7 @@ export function ERPDataTable<T>({
                       key={header.id}
                       scope="col"
                       aria-sort={canSort ? ariaSort : undefined}
-                      className="border-b border-border px-4 py-3 font-medium"
+                      className="border-b border-border px-4 py-3 text-xs font-semibold text-muted-foreground"
                     >
                       {header.isPlaceholder ? null : canSort ? (
                         <button

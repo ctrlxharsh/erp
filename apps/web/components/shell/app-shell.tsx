@@ -29,32 +29,36 @@ export async function AppShell({
 }) {
   const t = await getTranslations();
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <a
         href="#content"
         className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded-md focus:bg-background focus:p-3"
       >
         {t("nav.skip")}
       </a>
-      <aside className="hidden w-60 shrink-0 border-r border-border bg-surface md:block">
-        <SidebarNav isPlatform={isPlatform} permissions={permissions} />
-      </aside>
-      <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-16 items-center gap-3 border-b border-border px-4">
-          <MobileNav isPlatform={isPlatform} permissions={permissions} />
-          <SchoolLogo name={school.name} logoSrc={school.logoSrc} />
-          <span className="truncate font-semibold text-primary">{school.name}</span>
-          <div className="ml-auto flex items-center gap-1">
-            <NotificationsButton />
-            <UserMenu name={userName} />
-          </div>
-        </header>
-        <main id="content" className="flex-1 p-4 md:p-6">
-          {children}
-        </main>
-        <footer className="border-t border-border px-4 py-3 text-xs text-muted-foreground">
-          {t("app.poweredBy")}
-        </footer>
+      <header className="relative z-30 flex h-16 shrink-0 items-center gap-2 bg-primary px-3 text-primary-foreground md:gap-3 md:px-6">
+        <MobileNav isPlatform={isPlatform} permissions={permissions} />
+        <SchoolLogo name={school.name} logoSrc={school.logoSrc} />
+        <span className="min-w-0 truncate font-heading text-base font-extrabold md:text-lg">
+          {school.name}
+        </span>
+        <div className="ml-auto flex shrink-0 items-center gap-1">
+          <NotificationsButton />
+          <UserMenu name={userName} />
+        </div>
+      </header>
+      <div className="flex min-h-0 flex-1">
+        <aside className="hidden w-60 shrink-0 border-r border-border bg-background md:block">
+          <SidebarNav isPlatform={isPlatform} permissions={permissions} />
+        </aside>
+        <div className="flex min-w-0 flex-1 flex-col">
+          <main id="content" className="flex-1 p-4 md:p-7">
+            {children}
+          </main>
+          <footer className="px-4 py-3 text-xs text-muted-foreground md:px-7">
+            {t("app.poweredBy")}
+          </footer>
+        </div>
       </div>
     </div>
   );

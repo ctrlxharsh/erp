@@ -19,7 +19,7 @@ export function MobileNav({
   return (
     <div className="md:hidden">
       <Button
-        variant="ghost"
+        variant="onPrimary"
         size="icon"
         aria-label={open ? t("closeMenu") : t("openMenu")}
         aria-expanded={open}
@@ -35,7 +35,7 @@ export function MobileNav({
       {open ? (
         <div
           id="mobile-nav"
-          className="absolute inset-x-0 top-16 z-40 border-b border-border bg-background"
+          className="absolute inset-x-0 top-16 z-40 max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-border bg-background shadow-sm"
         >
           <SidebarNav
             isPlatform={isPlatform}

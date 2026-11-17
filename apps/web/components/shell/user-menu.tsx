@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Bell, User } from "lucide-react";
+import { Bell } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
@@ -32,7 +32,7 @@ export function NotificationsButton() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="ghost"
+          variant="onPrimary"
           size="icon"
           className="relative"
           aria-label={
@@ -45,7 +45,7 @@ export function NotificationsButton() {
           {unread > 0 ? (
             <span
               aria-hidden="true"
-              className="absolute right-1 top-1 flex min-w-4 items-center justify-center rounded-full bg-danger px-1 text-[10px] font-semibold text-danger-foreground"
+              className="absolute right-1 top-1 flex min-w-4 items-center justify-center rounded-full bg-warning px-1 text-[10px] font-bold text-warning-foreground"
             >
               {unread > 9 ? "9+" : unread}
             </span>
@@ -101,6 +101,12 @@ export function NotificationsButton() {
 export function UserMenu({ name }: { name: string }) {
   const t = useTranslations("shell");
   const router = useRouter();
+  const initials = name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0]?.toUpperCase())
+    .join("");
 
   async function signOut() {
     await authClient.signOut();
@@ -111,8 +117,13 @@ export function UserMenu({ name }: { name: string }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" aria-label={t("userMenu")}>
-          <User className="size-5" aria-hidden="true" />
+        <Button variant="onPrimary" size="icon" aria-label={t("userMenu")}>
+          <span
+            aria-hidden="true"
+            className="flex size-8 items-center justify-center rounded-full bg-warning text-xs font-extrabold text-warning-foreground"
+          >
+            {initials}
+          </span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
