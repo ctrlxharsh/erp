@@ -10,6 +10,7 @@ export * from "./classwork";
 export * from "./daily";
 export * from "./exams";
 export * from "./files";
+export * from "./leave";
 export * from "./notices";
 export * from "./people";
 export * from "./platform";

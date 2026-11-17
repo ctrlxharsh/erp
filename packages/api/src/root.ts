@@ -4,6 +4,7 @@ import { classworkRouter } from "./routers/classwork";
 import { exams, grades, marks, results } from "./routers/exams";
 import { filesRouter } from "./routers/files";
 import { homeRouter } from "./routers/home";
+import { leave } from "./routers/leave";
 import { noticesRouter } from "./routers/notices";
 import { notificationsRouter } from "./routers/notifications";
 import { peopleRouter } from "./routers/people";
@@ -25,6 +26,7 @@ export const appRouter = router({
   results,
   files: filesRouter,
   home: homeRouter,
+  leave,
   notices: noticesRouter,
   notifications: notificationsRouter,
   people: peopleRouter,

@@ -3,16 +3,21 @@ import {
   BookOpen,
   CalendarCheck,
   CalendarDays,
+  CalendarOff,
   ClipboardCheck,
   Clock,
+  GraduationCap as ExamIcon,
+  FileCheck,
   FolderOpen,
   GraduationCap,
   LayoutGrid,
   type LucideIcon,
   Megaphone,
   NotebookPen,
+  Pencil,
   School,
   Settings,
+  Trophy,
   Users,
 } from "lucide-react";
 
@@ -32,7 +37,13 @@ export interface NavItem {
     | "homework"
     | "diary"
     | "materials"
-    | "notices";
+    | "notices"
+    | "exams"
+    | "marks"
+    | "results"
+    | "reviewResults"
+    | "leave"
+    | "leaveRequests";
   icon: LucideIcon;
   /** Only shown to platform accounts (Super Admin, Platform Support). */
   platformOnly?: boolean;
@@ -56,6 +67,12 @@ export const navItems: NavItem[] = [
   { href: "/diary", labelKey: "diary", icon: BookOpen, permission: "diary.view" },
   { href: "/materials", labelKey: "materials", icon: FolderOpen, permission: "material.view" },
   { href: "/notices", labelKey: "notices", icon: Megaphone, permission: "notice.view" },
+  { href: "/exams", labelKey: "exams", icon: ExamIcon, permission: "exams.view" },
+  { href: "/marks", labelKey: "marks", icon: Pencil, permission: "marks.enter" },
+  { href: "/results", labelKey: "results", icon: Trophy, permission: "results.view_own" },
+  { href: "/results", labelKey: "reviewResults", icon: FileCheck, permission: "marks.approve" },
+  { href: "/leave", labelKey: "leave", icon: CalendarOff, permission: "leave.apply" },
+  { href: "/leave", labelKey: "leaveRequests", icon: CalendarOff, permission: "leave.approve" },
   {
     href: "/people/students",
     labelKey: "students",

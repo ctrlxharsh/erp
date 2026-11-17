@@ -1,7 +1,7 @@
 import { createDb, schema } from "@erp/db";
 import { schoolToday } from "@erp/domain";
 import { TRPCError } from "@trpc/server";
-import { inArray } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createAccessStore } from "./access-store";
 import { createCaller } from "./root";
@@ -311,7 +311,12 @@ run("attendance", () => {
     const [event] = await db
       .select()
       .from(schema.auditEvents)
-      .where(inArray(schema.auditEvents.action, ["attendance.corrected"]));
+      .where(
+        and(
+          eq(schema.auditEvents.schoolId, schoolA),
+          inArray(schema.auditEvents.action, ["attendance.corrected"]),
+        ),
+      );
     expect(event?.metadata).toMatchObject({ date: yesterday, reason: "Teacher forgot to submit" });
   });
 

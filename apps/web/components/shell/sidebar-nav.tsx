@@ -30,7 +30,7 @@ export function SidebarNav({
           const active = href === "/" ? pathname === "/" : pathname.startsWith(section);
           return (
             <Link
-              key={href}
+              key={labelKey}
               href={href}
               onClick={onNavigate}
               aria-current={active ? "page" : undefined}

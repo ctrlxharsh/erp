@@ -10,6 +10,7 @@ const tabs = [
   { href: "/setup/sessions", key: "tabSessions" },
   { href: "/setup/classes", key: "tabClasses" },
   { href: "/setup/subjects", key: "tabSubjects" },
+  { href: "/setup/grades", key: "tabGrades" },
 ] as const;
 
 export function SetupTabs() {

@@ -8,4 +8,7 @@ try {
   // No .env.local (for example in CI): integration tests are skipped.
 }
 
-export default defineConfig({ test: { testTimeout: 60_000, hookTimeout: 120_000 } });
+export default defineConfig({
+  // Integration tests share one Neon branch; a few at a time keeps connections stable.
+  test: { testTimeout: 60_000, hookTimeout: 120_000, maxWorkers: 1 },
+});
