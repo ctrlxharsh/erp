@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTRPC } from "@/lib/trpc/client";
 import { StatusPicker } from "../status-picker";
@@ -36,7 +37,7 @@ export function StaffAttendance() {
       <Link href="/attendance" className="text-sm text-primary underline">
         {t("back")}
       </Link>
-      <h1 className="text-2xl font-semibold text-primary">{t("staffTitle")}</h1>
+      <PageHeader title={t("staffTitle")} />
       <div className="flex max-w-xs flex-col gap-1.5">
         <Label htmlFor="sa-date">{t("date")}</Label>
         <Input

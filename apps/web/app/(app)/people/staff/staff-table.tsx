@@ -14,6 +14,7 @@ import { ERPDataTable } from "@/components/erp-data-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { useTRPC } from "@/lib/trpc/client";
@@ -97,12 +98,14 @@ export function StaffTable() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold text-primary">{t("staffTitle")}</h1>
-        {can("people.manage") ? (
-          <Button onClick={() => setAdding((v) => !v)}>{t("addStaff")}</Button>
-        ) : null}
-      </div>
+      <PageHeader
+        title={t("staffTitle")}
+        actions={
+          can("people.manage") ? (
+            <Button onClick={() => setAdding((v) => !v)}>{t("addStaff")}</Button>
+          ) : null
+        }
+      />
       {adding ? (
         <form
           noValidate
@@ -137,7 +140,7 @@ export function StaffTable() {
               <option value="non_teaching">{t("nonTeaching")}</option>
             </Select>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="s-email">{t("email")}</Label>
               <Input id="s-email" type="email" {...register("email")} />

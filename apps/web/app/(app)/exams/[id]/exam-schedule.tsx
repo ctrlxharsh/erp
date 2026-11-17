@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { ConfirmButton } from "@/components/ui/confirm-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTRPC } from "@/lib/trpc/client";
@@ -55,7 +56,7 @@ export function ExamSchedule({ examId }: { examId: string }) {
       <Link href="/exams" className="text-sm text-primary underline">
         {t("back")}
       </Link>
-      <h1 className="text-2xl font-semibold text-primary">{t("schedule")}</h1>
+      <PageHeader title={t("schedule")} />
       {schedule.isPending ? <Skeleton className="h-24 w-full" /> : null}
       {schedule.data?.length === 0 ? (
         <p className="text-muted-foreground">{t("noSchedule")}</p>
@@ -97,7 +98,7 @@ export function ExamSchedule({ examId }: { examId: string }) {
       {can("exams.manage") ? (
         <form
           noValidate
-          className="grid max-w-xl grid-cols-2 gap-3 rounded-md border border-border p-4"
+          className="grid max-w-xl grid-cols-1 gap-3 sm:grid-cols-2 rounded-md border border-border p-4"
           onSubmit={handleSubmit(async (values) => {
             try {
               await save.mutateAsync(values);

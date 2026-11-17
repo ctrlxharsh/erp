@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PageHeader } from "@/components/ui/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { useTRPC } from "@/lib/trpc/client";
@@ -58,15 +59,21 @@ export function MarksSheet(key: { examId: string; sectionId: string; subjectId: 
       <Link href="/marks" className="text-sm text-primary underline">
         {t("back")}
       </Link>
-      <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-semibold text-primary">
-          {batch.examName} · {batch.subjectName}
-        </h1>
-        <StatusBadge status={resultBadge[batch.status] ?? "draft"} label={t(batch.status)} />
-      </div>
-      <p className="text-sm text-muted-foreground">
-        {batch.sectionLabel} · {t("marksOutOf", { max: batch.maxMarks })}
-      </p>
+      <PageHeader
+        title={
+          <>
+            {batch.examName} · {batch.subjectName}
+          </>
+        }
+        description={
+          <>
+            {batch.sectionLabel} · {t("marksOutOf", { max: batch.maxMarks })}
+          </>
+        }
+        actions={
+          <StatusBadge status={resultBadge[batch.status] ?? "draft"} label={t(batch.status)} />
+        }
+      />
       {batch.status === "rejected" && batch.decisionComment ? (
         <p role="status" className="rounded-md bg-danger/10 p-3 text-sm text-danger">
           {t("sentBack", { comment: batch.decisionComment })}

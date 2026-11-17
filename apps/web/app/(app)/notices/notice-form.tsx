@@ -13,6 +13,7 @@ import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { useTRPC } from "@/lib/trpc/client";
 import { usePermissions } from "@/lib/use-permissions";
@@ -77,7 +78,7 @@ export function NoticeForm({ noticeId }: { noticeId?: string }) {
       <Link href="/notices" className="text-sm text-primary underline">
         {t("back")}
       </Link>
-      <h1 className="text-2xl font-semibold text-primary">{noticeId ? t("edit") : t("write")}</h1>
+      <PageHeader title={noticeId ? t("edit") : t("write")} />
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="n-title">{t("noticeTitle")}</Label>
         <Input id="n-title" aria-invalid={errors.title ? true : undefined} {...register("title")} />

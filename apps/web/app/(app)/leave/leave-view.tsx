@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { ConfirmButton } from "@/components/ui/confirm-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type Status, StatusBadge } from "@/components/ui/status-badge";
@@ -59,10 +60,10 @@ function MyLeave() {
 
   return (
     <section className="flex flex-col gap-4">
-      <h1 className="text-2xl font-semibold text-primary">{t("title")}</h1>
+      <PageHeader title={t("title")} />
       <form
         noValidate
-        className="grid max-w-xl grid-cols-2 gap-3 rounded-md border border-border p-4"
+        className="grid max-w-xl grid-cols-1 gap-3 sm:grid-cols-2 rounded-md border border-border p-4"
         onSubmit={handleSubmit(async (values) => {
           try {
             await submit.mutateAsync(values);
@@ -168,7 +169,7 @@ function Requests() {
 
   return (
     <section className="flex flex-col gap-4">
-      <h2 className="text-2xl font-semibold text-primary">{t("requests")}</h2>
+      <PageHeader title={t("requests")} />
       {list.data?.length === 0 ? <p className="text-muted-foreground">{t("noRequests")}</p> : null}
       <ul className="flex flex-col gap-2">
         {list.data?.map((r) => (

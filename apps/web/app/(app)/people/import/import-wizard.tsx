@@ -8,6 +8,7 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageHeader } from "@/components/ui/page-header";
 import { useTRPC } from "@/lib/trpc/client";
 
 interface Preview {
@@ -91,7 +92,7 @@ export function ImportWizard() {
       <Link href="/people/students" className="text-sm text-primary underline">
         {t("back")}
       </Link>
-      <h1 className="text-2xl font-semibold text-primary">{t("importTitle")}</h1>
+      <PageHeader title={t("importTitle")} />
 
       <Card>
         <CardHeader>

@@ -89,7 +89,7 @@ export function PeriodsPanel({
         </ul>
         <form
           noValidate
-          className="grid max-w-lg grid-cols-3 items-end gap-2"
+          className="grid max-w-lg grid-cols-1 items-end gap-2 sm:grid-cols-3"
           onSubmit={handleSubmit(async (values) => {
             try {
               await save.mutateAsync({ ...values, id: editingId ?? undefined });

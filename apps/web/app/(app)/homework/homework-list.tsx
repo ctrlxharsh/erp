@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -40,14 +41,16 @@ export function HomeworkList() {
 
   return (
     <div className="flex max-w-3xl flex-col gap-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold text-primary">{t("title")}</h1>
-        {can("homework.manage") ? (
-          <Button asChild>
-            <Link href="/homework/new">{t("new")}</Link>
-          </Button>
-        ) : null}
-      </div>
+      <PageHeader
+        title={t("title")}
+        actions={
+          can("homework.manage") ? (
+            <Button asChild>
+              <Link href="/homework/new">{t("new")}</Link>
+            </Button>
+          ) : null
+        }
+      />
 
       {children.length > 1 ? (
         <div className="max-w-xs">

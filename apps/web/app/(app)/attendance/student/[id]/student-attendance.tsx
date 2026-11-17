@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type Status, StatusBadge } from "@/components/ui/status-badge";
 import { useTRPC } from "@/lib/trpc/client";
@@ -49,7 +50,7 @@ export function StudentAttendance({ studentId }: { studentId: string }) {
       <Link href="/attendance" className="text-sm text-primary underline">
         {t("back")}
       </Link>
-      <h1 className="text-2xl font-semibold text-primary">{t("myAttendance")}</h1>
+      <PageHeader title={t("myAttendance")} />
       <div className="flex items-center gap-2">
         <Button variant="outline" size="icon" aria-label={t("previous")} onClick={() => step(-1)}>
           <ChevronLeft className="size-4" aria-hidden="true" />

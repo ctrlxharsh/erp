@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTRPC } from "@/lib/trpc/client";
@@ -32,7 +33,7 @@ export function ResultsView() {
 
   return (
     <div className="flex max-w-2xl flex-col gap-4">
-      <h1 className="text-2xl font-semibold text-primary">{t("title")}</h1>
+      <PageHeader title={t("title")} />
       {children.length > 1 ? (
         <div className="max-w-xs">
           <Select

@@ -14,6 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ConfirmButton } from "@/components/ui/confirm-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { useTRPC } from "@/lib/trpc/client";
@@ -57,13 +58,15 @@ export function StudentDetail({ studentId }: { studentId: string }) {
       <Link href="/people/students" className="text-sm text-primary underline">
         {t("back")}
       </Link>
-      <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-semibold text-primary">{student.fullName}</h1>
-        <StatusBadge
-          status={student.status === "active" ? "approved" : "draft"}
-          label={student.status === "active" ? t("active") : t("left")}
-        />
-      </div>
+      <PageHeader
+        title={student.fullName}
+        actions={
+          <StatusBadge
+            status={student.status === "active" ? "approved" : "draft"}
+            label={student.status === "active" ? t("active") : t("left")}
+          />
+        }
+      />
 
       <Card>
         <CardContent>
@@ -164,7 +167,7 @@ export function StudentDetail({ studentId }: { studentId: string }) {
                     <p className="text-sm text-danger">{errors.fullName.message}</p>
                   ) : null}
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <div className="flex flex-col gap-1.5">
                     <Label htmlFor="gemail">{t("guardianEmail")}</Label>
                     <Input id="gemail" type="email" {...register("email")} />

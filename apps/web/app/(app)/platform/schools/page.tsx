@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/page-header";
 import { getServerApi } from "@/lib/trpc/server";
 import { SchoolsTable } from "./schools-table";
 
@@ -12,14 +13,16 @@ export default async function SchoolsPage() {
   const me = await (await getServerApi()).session.me();
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold text-primary">{t("schoolsTitle")}</h1>
-        {me.platformRole === "super_admin" ? (
-          <Button asChild>
-            <Link href="/platform/schools/new">{t("newSchool")}</Link>
-          </Button>
-        ) : null}
-      </div>
+      <PageHeader
+        title={t("schoolsTitle")}
+        actions={
+          me.platformRole === "super_admin" ? (
+            <Button asChild>
+              <Link href="/platform/schools/new">{t("newSchool")}</Link>
+            </Button>
+          ) : null
+        }
+      />
       <SchoolsTable />
     </div>
   );

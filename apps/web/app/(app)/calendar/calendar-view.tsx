@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { ConfirmButton } from "@/components/ui/confirm-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTRPC } from "@/lib/trpc/client";
@@ -90,17 +91,19 @@ export function CalendarView() {
 
   return (
     <div className="flex max-w-3xl flex-col gap-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold text-primary">{t("title")}</h1>
-        {manage ? (
-          <div className="flex gap-2">
-            <Button asChild variant="outline">
-              <Link href="/calendar/import">{t("import")}</Link>
-            </Button>
-            <Button onClick={() => startEdit()}>{t("addEvent")}</Button>
-          </div>
-        ) : null}
-      </div>
+      <PageHeader
+        title={t("title")}
+        actions={
+          manage ? (
+            <>
+              <Button asChild variant="outline">
+                <Link href="/calendar/import">{t("import")}</Link>
+              </Button>
+              <Button onClick={() => startEdit()}>{t("addEvent")}</Button>
+            </>
+          ) : null
+        }
+      />
 
       <div className="flex items-center gap-2">
         <Button variant="outline" size="icon" aria-label={t("previous")} onClick={() => step(-1)}>
@@ -138,7 +141,7 @@ export function CalendarView() {
             />
             {errors.title ? <p className="text-sm text-danger">{errors.title.message}</p> : null}
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="ev-start">{t("start")}</Label>
               <Input id="ev-start" type="date" {...register("startDate")} />
@@ -151,7 +154,7 @@ export function CalendarView() {
               ) : null}
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="ev-type">{t("type")}</Label>
               <Select id="ev-type" {...register("type")}>

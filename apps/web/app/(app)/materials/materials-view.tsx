@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTRPC } from "@/lib/trpc/client";
@@ -38,7 +39,7 @@ export function MaterialsView() {
 
   return (
     <div className="flex max-w-3xl flex-col gap-4">
-      <h1 className="text-2xl font-semibold text-primary">{t("title")}</h1>
+      <PageHeader title={t("title")} />
 
       {can("material.manage") ? (
         assignments.isSuccess && options.length === 0 ? (

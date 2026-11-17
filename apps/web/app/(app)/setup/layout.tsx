@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
+import { PageHeader } from "@/components/ui/page-header";
 import { getServerApi } from "@/lib/trpc/server";
 import { SetupTabs } from "./setup-tabs";
 
@@ -12,7 +13,7 @@ export default async function SetupLayout({ children }: { children: ReactNode })
   if (!current?.permissions.includes("school.setup")) notFound();
   return (
     <div className="flex max-w-3xl flex-col gap-4">
-      <h1 className="text-2xl font-semibold text-primary">{t("title")}</h1>
+      <PageHeader title={t("title")} />
       <SetupTabs />
       {children}
     </div>

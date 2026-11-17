@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -36,7 +37,7 @@ export function ReviewPanel() {
 
   return (
     <div className="flex max-w-3xl flex-col gap-4">
-      <h1 className="text-2xl font-semibold text-primary">{t("reviewTitle")}</h1>
+      <PageHeader title={t("reviewTitle")} />
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div className="flex max-w-xs flex-col gap-1.5">
           <Label htmlFor="rv-status">{t("filter")}</Label>

@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { PageHeader } from "@/components/ui/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type Status, StatusBadge } from "@/components/ui/status-badge";
 import { useTRPC } from "@/lib/trpc/client";
@@ -21,7 +22,7 @@ export function MarksList() {
   const list = useQuery(trpc.marks.available.queryOptions());
   return (
     <div className="flex max-w-3xl flex-col gap-4">
-      <h1 className="text-2xl font-semibold text-primary">{t("title")}</h1>
+      <PageHeader title={t("title")} />
       {list.isPending ? <Skeleton className="h-24 w-full" /> : null}
       {list.data?.length === 0 ? <p className="text-muted-foreground">{t("empty")}</p> : null}
       <ul className="flex flex-col gap-2">

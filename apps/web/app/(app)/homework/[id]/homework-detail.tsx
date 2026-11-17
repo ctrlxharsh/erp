@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTRPC } from "@/lib/trpc/client";
@@ -45,7 +46,7 @@ export function HomeworkDetail({ homeworkId }: { homeworkId: string }) {
       <Link href="/homework" className="text-sm text-primary underline">
         {t("back")}
       </Link>
-      <h1 className="text-2xl font-semibold text-primary">{homework.title}</h1>
+      <PageHeader title={homework.title} />
       <Card>
         <CardContent className="flex flex-col gap-2 text-sm">
           <p className="text-muted-foreground">

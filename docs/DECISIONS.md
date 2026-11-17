@@ -217,5 +217,17 @@ Status values: `Accepted`, `Superseded by ADR-NNN`, `Proposed`.
 - **Follow-ups:** Hindi text in PDFs needs a bundled font; no email on leave decisions yet.
 
 
+## ADR-031 — Campus Colours UI theme
+**Status:** Accepted · 2026-11-17
+- **Decision:** the web UI follows the "Campus Colours" direction chosen by the founder from four options.
+  - **Shell:** navy top bar with the school's logo (on a white tile) and name, notification count and avatar in saffron; white sidebar below it on desktop; on phones the sidebar becomes a scrollable panel under the bar. Page background is light grey (`canvas`), cards are white.
+  - **Module tones:** every module has one of five tones (navy, teal, saffron, coral, slate), each a light tint with a dark foreground that passes AA. The mapping lives in `components/shell/nav.ts`; the tokens are `--tone-*` in `globals.css`. A tone is always paired with a text label, never used alone.
+  - **Type:** Manrope for headings, Inter for body, both loaded with `next/font`. This replaces "Inter only" in CONSTITUTION §7.1 for headings.
+  - **Shape:** 10 px radius for controls, 14 px for cards. Controls and buttons are at least 44 px high.
+  - **Shared pieces:** `ToneIcon`, `PageHeader`, `StatTile`, `ProgressBar` in `components/ui/`. Progress bars always print the numbers next to them.
+- **Deviations:** the school's initials tile is white with navy text (a navy tile would vanish on the navy bar). The mockup's global search box and the Today panels "attendance by class", "waiting for you" and "coming up" are not built; they need new features or API data.
+- **Follow-ups:** Manrope and Inter have no Devanagari characters, so the Hindi UI will need a fallback font such as Noto Sans Devanagari. PDFs and the WhatsApp image keep their own fixed navy branding.
+
+
 ## Test accounts (local and test branch only)
 Five demo logins exist on the Neon `test` branch for manual testing: superadmin, schooladmin, principal, teacher and student at `@example.com`, linked to "Demo Public School". They are not for production. Passwords are in the team password manager, not in the repo.

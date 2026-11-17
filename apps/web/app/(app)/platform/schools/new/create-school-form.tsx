@@ -11,6 +11,7 @@ import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
 import { useTRPC } from "@/lib/trpc/client";
 
 type Values = z.input<typeof createSchoolInputSchema>;
@@ -41,7 +42,7 @@ export function CreateSchoolForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex max-w-md flex-col gap-4">
-      <h1 className="text-2xl font-semibold text-primary">{t("newSchool")}</h1>
+      <PageHeader title={t("newSchool")} />
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="name">{t("schoolName")}</Label>
         <Input

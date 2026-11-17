@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type Status, StatusBadge } from "@/components/ui/status-badge";
 import { useTRPC } from "@/lib/trpc/client";
@@ -35,14 +36,16 @@ export function NoticesList() {
 
   return (
     <div className="flex max-w-3xl flex-col gap-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold text-primary">{t("title")}</h1>
-        {can("notice.write") ? (
-          <Button asChild>
-            <Link href="/notices/new">{t("write")}</Link>
-          </Button>
-        ) : null}
-      </div>
+      <PageHeader
+        title={t("title")}
+        actions={
+          can("notice.write") ? (
+            <Button asChild>
+              <Link href="/notices/new">{t("write")}</Link>
+            </Button>
+          ) : null
+        }
+      />
       {tabs.length > 1 ? (
         <div role="tablist" aria-label={t("title")} className="flex gap-1 border-b border-border">
           {tabs.map((item) => (

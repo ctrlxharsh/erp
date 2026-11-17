@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ConfirmButton } from "@/components/ui/confirm-button";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -44,13 +45,15 @@ export function StaffDetail({ staffId }: { staffId: string }) {
       <Link href="/people/staff" className="text-sm text-primary underline">
         {t("backToStaff")}
       </Link>
-      <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-semibold text-primary">{person.fullName}</h1>
-        <StatusBadge
-          status={person.status === "active" ? "approved" : "draft"}
-          label={person.status === "active" ? t("active") : t("left")}
-        />
-      </div>
+      <PageHeader
+        title={person.fullName}
+        actions={
+          <StatusBadge
+            status={person.status === "active" ? "approved" : "draft"}
+            label={person.status === "active" ? t("active") : t("left")}
+          />
+        }
+      />
       <Card>
         <CardContent className="flex flex-col gap-3">
           <dl className="grid grid-cols-[10rem_1fr] gap-y-2 text-sm">

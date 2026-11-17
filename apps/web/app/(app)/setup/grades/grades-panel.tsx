@@ -41,45 +41,47 @@ export function GradesPanel() {
   return (
     <div className="flex max-w-xl flex-col gap-4">
       <p className="text-muted-foreground">{t("intro")}</p>
-      <ul className="flex flex-col gap-2">
-        <li className="grid grid-cols-[1fr_1fr_1fr_auto] gap-2 text-sm font-medium">
-          <span>{t("grade")}</span>
-          <span>{t("from")}</span>
-          <span>{t("points")}</span>
-          <span />
-        </li>
-        {bands.map((band, index) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: rows are edited in place
-          <li key={index} className="grid grid-cols-[1fr_1fr_1fr_auto] items-center gap-2">
-            <Input
-              aria-label={t("grade")}
-              value={band.grade}
-              onChange={(e) => update(index, { grade: e.target.value })}
-            />
-            <Input
-              aria-label={t("from")}
-              type="number"
-              min={0}
-              max={100}
-              value={band.minPercent}
-              onChange={(e) => update(index, { minPercent: e.target.value })}
-            />
-            <Input
-              aria-label={t("points")}
-              type="number"
-              min={0}
-              value={band.gradePoint}
-              onChange={(e) => update(index, { gradePoint: e.target.value })}
-            />
-            <Button
-              variant="ghost"
-              onClick={() => setBands((all) => all.filter((_, i) => i !== index))}
-            >
-              {t("remove")}
-            </Button>
+      <div className="overflow-x-auto">
+        <ul className="flex min-w-[26rem] flex-col gap-2">
+          <li className="grid grid-cols-[1fr_1fr_1fr_auto] gap-2 text-sm font-medium">
+            <span>{t("grade")}</span>
+            <span>{t("from")}</span>
+            <span>{t("points")}</span>
+            <span />
           </li>
-        ))}
-      </ul>
+          {bands.map((band, index) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: rows are edited in place
+            <li key={index} className="grid grid-cols-[1fr_1fr_1fr_auto] items-center gap-2">
+              <Input
+                aria-label={t("grade")}
+                value={band.grade}
+                onChange={(e) => update(index, { grade: e.target.value })}
+              />
+              <Input
+                aria-label={t("from")}
+                type="number"
+                min={0}
+                max={100}
+                value={band.minPercent}
+                onChange={(e) => update(index, { minPercent: e.target.value })}
+              />
+              <Input
+                aria-label={t("points")}
+                type="number"
+                min={0}
+                value={band.gradePoint}
+                onChange={(e) => update(index, { gradePoint: e.target.value })}
+              />
+              <Button
+                variant="ghost"
+                onClick={() => setBands((all) => all.filter((_, i) => i !== index))}
+              >
+                {t("remove")}
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </div>
       <div className="flex gap-2">
         <Button
           variant="outline"

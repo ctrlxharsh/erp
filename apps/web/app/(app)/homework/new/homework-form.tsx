@@ -14,6 +14,7 @@ import { FilePicker, type PickedFile } from "@/components/file-picker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { useTRPC } from "@/lib/trpc/client";
 
@@ -69,7 +70,7 @@ export function HomeworkForm() {
       <Link href="/homework" className="text-sm text-primary underline">
         {t("back")}
       </Link>
-      <h1 className="text-2xl font-semibold text-primary">{t("new")}</h1>
+      <PageHeader title={t("new")} />
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="hw-pair">
           {t("classSection")} · {t("subject")}

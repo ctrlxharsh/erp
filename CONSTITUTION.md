@@ -254,8 +254,9 @@ The product logo is the "P + open book" mark in `docs/brand/`. In Phase 0 it is 
 Semantic tokens map to these: `primary`, `secondary`, `success` (green derived to sit beside teal), `warning` (saffron), `danger` (coral), `info` (teal). Components use semantic tokens only, never raw hex values.
 
 - **Theme:** light only for now. Tokens are defined as CSS variables so a dark theme can be added later.
-- **Type:** Inter on web and mobile. Base 16 px on web, 15–16 px on mobile; one heading scale.
-- **Shape:** 8 px radius by default, subtle 1 px borders, minimal shadow.
+- **Type:** Inter for body text and Manrope for headings on web (ADR-031); Inter on mobile. Base 16 px on web, 15–16 px on mobile; one heading scale.
+- **Shape:** 10 px radius for controls and 14 px for cards, subtle 1 px borders, minimal shadow. Controls are at least 44 px high.
+- **Module tones:** navy, teal, saffron, coral and slate tints with dark foregrounds mark module areas (icons, stat tiles, badges), always next to a text label. See ADR-031.
 
 ### 7.2 School branding
 

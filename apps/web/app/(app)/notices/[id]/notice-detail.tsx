@@ -11,6 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ConfirmButton } from "@/components/ui/confirm-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { useTRPC } from "@/lib/trpc/client";
@@ -71,13 +72,15 @@ export function NoticeDetail({ noticeId }: { noticeId: string }) {
       <Link href="/notices" className="text-sm text-primary underline">
         {t("back")}
       </Link>
-      <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-semibold text-primary">{notice.title}</h1>
-        <StatusBadge
-          status={noticeBadge[notice.status] ?? "draft"}
-          label={notice.status === "rejected" ? t("rejectedStatus") : t(notice.status)}
-        />
-      </div>
+      <PageHeader
+        title={notice.title}
+        actions={
+          <StatusBadge
+            status={noticeBadge[notice.status] ?? "draft"}
+            label={notice.status === "rejected" ? t("rejectedStatus") : t(notice.status)}
+          />
+        }
+      />
       <Card>
         <CardContent className="flex flex-col gap-3">
           <p className="text-sm text-muted-foreground">

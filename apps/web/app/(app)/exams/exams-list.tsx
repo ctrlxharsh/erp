@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTRPC } from "@/lib/trpc/client";
 import { usePermissions } from "@/lib/use-permissions";
@@ -23,7 +24,7 @@ export function ExamsList() {
 
   return (
     <div className="flex max-w-2xl flex-col gap-4">
-      <h1 className="text-2xl font-semibold text-primary">{t("title")}</h1>
+      <PageHeader title={t("title")} />
       {can("exams.manage") ? (
         <form
           className="flex max-w-md flex-wrap items-end gap-2"

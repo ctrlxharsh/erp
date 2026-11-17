@@ -12,6 +12,7 @@ import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { useTRPC } from "@/lib/trpc/client";
 
@@ -61,7 +62,7 @@ export function StudentForm() {
       <Link href="/people/students" className="text-sm text-primary underline">
         {t("back")}
       </Link>
-      <h1 className="text-2xl font-semibold text-primary">{t("addStudent")}</h1>
+      <PageHeader title={t("addStudent")} />
       {noSession ? (
         <p role="alert" className="rounded-md bg-warning p-3 text-sm text-warning-foreground">
           {t("needSession")}
@@ -98,7 +99,7 @@ export function StudentForm() {
           )}
         </Select>
       </Field>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <Field id="dob" label={t("dob")} error={errors.dateOfBirth?.message}>
           <Input id="dob" type="date" {...register("dateOfBirth")} />
         </Field>
@@ -126,7 +127,7 @@ export function StudentForm() {
             >
               <Input id={`g-name-${index}`} {...register(`guardians.${index}.fullName`)} />
             </Field>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <Field
                 id={`g-email-${index}`}
                 label={t("guardianEmail")}

@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { ERPDataTable } from "@/components/erp-data-table";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/page-header";
 import { Select } from "@/components/ui/select";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { useTRPC } from "@/lib/trpc/client";
@@ -87,21 +88,23 @@ export function StudentsTable() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold text-primary">{t("studentsTitle")}</h1>
-        <div className="flex gap-2">
-          {can("people.import") ? (
-            <Button asChild variant="outline">
-              <Link href="/people/import">{t("importStudents")}</Link>
-            </Button>
-          ) : null}
-          {can("people.manage") ? (
-            <Button asChild>
-              <Link href="/people/students/new">{t("addStudent")}</Link>
-            </Button>
-          ) : null}
-        </div>
-      </div>
+      <PageHeader
+        title={t("studentsTitle")}
+        actions={
+          <>
+            {can("people.import") ? (
+              <Button asChild variant="outline">
+                <Link href="/people/import">{t("importStudents")}</Link>
+              </Button>
+            ) : null}
+            {can("people.manage") ? (
+              <Button asChild>
+                <Link href="/people/students/new">{t("addStudent")}</Link>
+              </Button>
+            ) : null}
+          </>
+        }
+      />
       <div className="max-w-xs">
         <Select
           aria-label={t("classSection")}

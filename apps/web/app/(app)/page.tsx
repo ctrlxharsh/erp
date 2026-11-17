@@ -1,9 +1,21 @@
-import { CheckCircle2, Circle, Inbox } from "lucide-react";
+import {
+  CheckCircle2,
+  Circle,
+  ClipboardCheck,
+  GraduationCap,
+  Inbox,
+  LayoutGrid,
+  School,
+  Users,
+} from "lucide-react";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageHeader } from "@/components/ui/page-header";
+import { StatTile } from "@/components/ui/stat-tile";
+import { ToneIcon } from "@/components/ui/tone-icon";
 import { getServerApi } from "@/lib/trpc/server";
 
 function Empty({ children }: { children: ReactNode }) {
@@ -20,7 +32,7 @@ export default async function TodayPage() {
   const t = await getTranslations("today");
   const api = await getServerApi();
   const me = await api.session.me();
-  const title = <h1 className="text-2xl font-semibold text-primary">{t("title")}</h1>;
+  const title = <PageHeader title={t("title")} />;
 
   if (!me.activeSchoolId) {
     return (
@@ -63,7 +75,8 @@ export default async function TodayPage() {
 
       {isAdmin && steps.some((s) => !s.done) ? (
         <Card>
-          <CardHeader>
+          <CardHeader className="flex-row items-center gap-3">
+            <ToneIcon icon={ClipboardCheck} tone="saffron" />
             <CardTitle>{t("checklistTitle")}</CardTitle>
           </CardHeader>
           <CardContent>
@@ -72,7 +85,7 @@ export default async function TodayPage() {
                 <li key={step.key}>
                   <Link
                     href={step.href}
-                    className="flex min-h-10 items-center gap-3 rounded-md px-2 hover:bg-muted"
+                    className="flex min-h-11 items-center gap-3 rounded-lg px-2 hover:bg-muted"
                   >
                     {step.done ? (
                       <CheckCircle2 className="size-5 text-success" aria-hidden="true" />
@@ -93,26 +106,27 @@ export default async function TodayPage() {
       ) : null}
 
       {home.counts ? (
-        <Card>
-          <CardHeader>
-            <CardTitle>{t("counts")}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <dl className="grid grid-cols-3 gap-4 text-center">
-              {(["students", "teachers", "classes"] as const).map((key) => (
-                <div key={key}>
-                  <dd className="text-3xl font-semibold text-primary">{home.counts?.[key]}</dd>
-                  <dt className="text-sm text-muted-foreground">{t(key)}</dt>
-                </div>
-              ))}
-            </dl>
-          </CardContent>
-        </Card>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <StatTile
+            icon={GraduationCap}
+            tone="teal"
+            label={t("students")}
+            value={home.counts.students}
+          />
+          <StatTile icon={Users} tone="navy" label={t("teachers")} value={home.counts.teachers} />
+          <StatTile
+            icon={LayoutGrid}
+            tone="slate"
+            label={t("classes")}
+            value={home.counts.classes}
+          />
+        </div>
       ) : null}
 
       {roles.includes("teacher") ? (
         <Card>
-          <CardHeader>
+          <CardHeader className="flex-row items-center gap-3">
+            <ToneIcon icon={School} tone="teal" />
             <CardTitle>{t("myClasses")}</CardTitle>
           </CardHeader>
           <CardContent>
@@ -121,8 +135,11 @@ export default async function TodayPage() {
             ) : (
               <ul className="flex flex-col gap-2">
                 {home.mySections.map((section) => (
-                  <li key={section.sectionId} className="rounded-md border border-border px-3 py-2">
-                    <p className="font-medium">{section.label}</p>
+                  <li
+                    key={section.sectionId}
+                    className="flex min-h-11 min-w-0 flex-col justify-center rounded-lg border border-border px-3 py-2"
+                  >
+                    <p className="truncate font-medium">{section.label}</p>
                     <p className="text-sm text-muted-foreground">
                       {[section.isClassTeacher ? t("classTeacher") : null, ...section.subjects]
                         .filter(Boolean)
@@ -138,7 +155,8 @@ export default async function TodayPage() {
 
       {roles.includes("parent") ? (
         <Card>
-          <CardHeader>
+          <CardHeader className="flex-row items-center gap-3">
+            <ToneIcon icon={Users} tone="teal" />
             <CardTitle>{t("myChildren")}</CardTitle>
           </CardHeader>
           <CardContent>
@@ -150,9 +168,9 @@ export default async function TodayPage() {
                   <li key={child.id}>
                     <Link
                       href={`/attendance/student/${child.id}`}
-                      className="block rounded-md border border-border px-3 py-2 hover:bg-muted"
+                      className="flex min-h-11 min-w-0 flex-col justify-center rounded-lg border border-border px-3 py-2 hover:bg-muted"
                     >
-                      <p className="font-medium">{child.fullName}</p>
+                      <p className="truncate font-medium">{child.fullName}</p>
                       {child.label ? (
                         <p className="text-sm text-muted-foreground">{child.label}</p>
                       ) : null}
@@ -167,12 +185,16 @@ export default async function TodayPage() {
 
       {home.me ? (
         <Card>
-          <CardHeader>
+          <CardHeader className="flex-row items-center gap-3">
+            <ToneIcon icon={School} tone="teal" />
             <CardTitle>{t("myClass")}</CardTitle>
           </CardHeader>
           <CardContent>
-            <Link href="/attendance/student/me" className="block hover:underline">
-              <p className="font-medium">{home.me.fullName}</p>
+            <Link
+              href="/attendance/student/me"
+              className="flex min-h-11 min-w-0 flex-col justify-center rounded-lg border border-border px-3 py-2 hover:bg-muted"
+            >
+              <p className="truncate font-medium">{home.me.fullName}</p>
               {home.me.label ? (
                 <p className="text-sm text-muted-foreground">{home.me.label}</p>
               ) : null}
