@@ -1,7 +1,21 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
-    "build": { "dependsOn": ["^build"], "outputs": [".next/**", "!.next/cache/**"] },
+    "build": {
+      "dependsOn": ["^build"],
+      "env": [
+        "DATABASE_URL",
+        "NEON_AUTH_BASE_URL",
+        "NEON_AUTH_JWKS_URL",
+        "NEON_AUTH_COOKIE_SECRET",
+        "NEON_PROJECT_ID",
+        "NEON_API_KEY",
+        "APP_URL",
+        "RESEND_API_KEY",
+        "EMAIL_FROM"
+      ],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
     "dev": { "cache": false, "persistent": true },
     "typecheck": { "dependsOn": ["^build"] },
     "test": { "dependsOn": ["^build"] }
