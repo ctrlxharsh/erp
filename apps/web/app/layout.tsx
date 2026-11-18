@@ -14,7 +14,9 @@ const manrope = Manrope({
   display: "swap",
 });
 
-export const metadata: Metadata = { title: { default: "ERP", template: "%s · ERP" } };
+export const metadata: Metadata = {
+  title: { default: "Pixel Schoolware", template: "%s · Pixel Schoolware" },
+};
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const locale = await getLocale();

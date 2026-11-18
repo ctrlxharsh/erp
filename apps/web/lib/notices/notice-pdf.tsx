@@ -70,7 +70,7 @@ export function NoticePdf({ doc }: { doc: NoticeDocument }) {
         <Text style={styles.heading}>{doc.title}</Text>
         <Text style={styles.body}>{doc.body}</Text>
         <Text style={styles.footer} fixed>
-          Powered by ERP · PastAndPixels Group
+          Pixel Schoolware · Made by PastAndPixels Group
         </Text>
       </Page>
     </Document>

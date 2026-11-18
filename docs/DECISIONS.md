@@ -31,7 +31,7 @@ Status values: `Accepted`, `Superseded by ADR-NNN`, `Proposed`.
 
 ## ADR-004 — One common login; school branding after login
 **Status:** Accepted · 2026-11-16
-- **Decision:** One login page on one domain; identifier is email or mobile + password. After login the school's logo and name replace ERP branding; footer reads "Powered by ERP · PastAndPixels Group". Schools set a logo only, not colors.
+- **Decision:** One login page on one domain; identifier is email or mobile + password. After login the school's logo and name replace Pixel Schoolware branding; footer reads "Pixel Schoolware · Made by PastAndPixels Group". Schools set a logo only, not colors.
 - **Rejected:** a subdomain per school (DNS, cookies and domain management overhead); per-school color themes (inconsistency, contrast failures).
 - **Why:** Matches the flow diagrams, least infrastructure, consistent UX.
 - **Risks:** Login page cannot show the school logo. Subdomains can be added later.
@@ -227,6 +227,12 @@ Status values: `Accepted`, `Superseded by ADR-NNN`, `Proposed`.
   - **Shared pieces:** `ToneIcon`, `PageHeader`, `StatTile`, `ProgressBar` in `components/ui/`. Progress bars always print the numbers next to them.
 - **Deviations:** the school's initials tile is white with navy text (a navy tile would vanish on the navy bar). The mockup's global search box and the Today panels "attendance by class", "waiting for you" and "coming up" are not built; they need new features or API data.
 - **Follow-ups:** Manrope and Inter have no Devanagari characters, so the Hindi UI will need a fallback font such as Noto Sans Devanagari. PDFs and the WhatsApp image keep their own fixed navy branding.
+
+
+## ADR-032 — Product renamed to Pixel Schoolware
+**Status:** Accepted · 2026-11-18
+- **Decision:** the product name is **Pixel Schoolware** (was "ERP"). The credit line everywhere (login page, PDFs, WhatsApp image) reads "Pixel Schoolware · Made by PastAndPixels Group". The P + open book logo is unchanged; it has no text in it.
+- **Not renamed:** internal names (`/*` packages, repo, `ERPDataTable`) stay, since they are not user-facing.
 
 
 ## Test accounts (local and test branch only)

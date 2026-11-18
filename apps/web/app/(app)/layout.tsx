@@ -30,7 +30,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
   return (
     <TRPCReactProvider>
       <AppShell
-        school={{ name: active?.name ?? "ERP", logoSrc }}
+        school={{ name: active?.name ?? "Pixel Schoolware", logoSrc }}
         userName={me.user.name}
         isPlatform={me.platformRole !== null}
         permissions={permissions}

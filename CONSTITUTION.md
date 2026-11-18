@@ -1,6 +1,6 @@
-# ERP — Project Constitution
+# Pixel Schoolware — Project Constitution
 
-> **Product:** ERP · **Built by:** PastAndPixels Group
+> **Product:** Pixel Schoolware · **Built by:** PastAndPixels Group
 > **Status:** Approved baseline · **Version:** 1.0 · **Date:** 2026-11-16
 >
 > This document is the single source of truth for *what* we build and *how*. Every design, code and review decision must be consistent with it. When reality forces a change, amend this file **and** add an entry to [`docs/DECISIONS.md`](docs/DECISIONS.md) in the same pull request. Anything not covered here is an **open decision**: ask, don't assume.
@@ -32,7 +32,7 @@
 
 ## 1. Product
 
-**ERP** is a multi-school management platform made by **PastAndPixels Group**. The platform owner (Super Admin) onboards schools. Each school then runs its own administration, academics, communication and fee records in an isolated space, with logins for School Admin, Principal, Teacher, Student and Parent.
+**Pixel Schoolware** is a multi-school management platform made by **PastAndPixels Group**. The platform owner (Super Admin) onboards schools. Each school then runs its own administration, academics, communication and fee records in an isolated space, with logins for School Admin, Principal, Teacher, Student and Parent.
 
 - **Market:** India first. Prices in INR, academic session April–March by default, CBSE-style grading by default (configurable per school), timezone `Asia/Kolkata`.
 - **Language:** English UI now. Every user-facing string goes through the i18n layer so Hindi and other languages can be added later without touching components.
@@ -262,7 +262,7 @@ Semantic tokens map to these: `primary`, `secondary`, `success` (green derived t
 
 - Super Admin screens and the login page show **ERP** branding.
 - After a school user logs in, the **school's logo and name replace ours** in the header, the mobile app bar, and on every generated document (notices, receipts, admit cards, report cards).
-- The footer shows **"Powered by ERP · PastAndPixels Group"**.
+- The footer shows **"Pixel Schoolware · Made by PastAndPixels Group"**.
 - Schools set a logo only, not custom colors. This keeps the UI consistent and accessible.
 - Missing logo → school initials on a navy tile.
 

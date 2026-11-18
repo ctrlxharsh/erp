@@ -1,7 +1,7 @@
 {
   "app": {
-    "name": "ERP",
-    "poweredBy": "Powered by ERP · PastAndPixels Group"
+    "name": "Pixel Schoolware",
+    "poweredBy": "Pixel Schoolware · Made by PastAndPixels Group"
   },
   "nav": {
     "today": "Today",
@@ -42,7 +42,7 @@
   },
   "today": {
     "title": "Today",
-    "welcome": "Welcome to ERP",
+    "welcome": "Welcome to Pixel Schoolware",
     "emptyTitle": "Nothing to do yet",
     "emptyBody": "Tasks that need your attention will appear here once your school is set up.",
     "checklistTitle": "Get your school ready",
@@ -94,7 +94,7 @@
     "expired": "Expired"
   },
   "auth": {
-    "title": "Sign in to ERP",
+    "title": "Sign in to Pixel Schoolware",
     "subtitle": "Use the email address your school gave you.",
     "email": "Email address",
     "emailInvalid": "Enter a valid email address",
@@ -103,7 +103,7 @@
     "signIn": "Sign in",
     "invalid": "The email or password is not correct. Please try again.",
     "failed": "We could not sign you in. Please try again in a moment.",
-    "poweredBy": "Powered by ERP · PastAndPixels Group",
+    "poweredBy": "Pixel Schoolware · Made by PastAndPixels Group",
     "forgot": "Forgot your password?",
     "forgotTitle": "Reset your password",
     "forgotBody": "Enter your email address and we will send you a link to set a new password.",

@@ -1,6 +1,6 @@
 # CLAUDE.md — working rules for this repository
 
-**ERP** by PastAndPixels Group: a multi-school ERP with a Next.js web app and (later) an Expo Android app in one pnpm + Turborepo monorepo.
+**Pixel Schoolware** by PastAndPixels Group: a multi-school ERP with a Next.js web app and (later) an Expo Android app in one pnpm + Turborepo monorepo.
 
 ## Read first, every session
 1. [`CONSTITUTION.md`](CONSTITUTION.md): the source of truth for scope, roles, stack, architecture, UX rules and roadmap.

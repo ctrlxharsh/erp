@@ -91,7 +91,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
           display: "flex",
         }}
       >
-        Powered by ERP · PastAndPixels Group
+        Pixel Schoolware · Made by PastAndPixels Group
       </div>
     </div>,
     { width: 1080, height: 1350 },

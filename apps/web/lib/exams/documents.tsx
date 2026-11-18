@@ -69,7 +69,7 @@ function Header({ school }: { school: SchoolHeader }) {
 
 const Footer = () => (
   <Text style={s.footer} fixed>
-    Powered by ERP · PastAndPixels Group
+    Pixel Schoolware · Made by PastAndPixels Group
   </Text>
 );
 

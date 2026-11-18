@@ -17,7 +17,7 @@ export function createEmailSender(): EmailSender {
         method: "POST",
         headers: { authorization: `Bearer ${key}`, "content-type": "application/json" },
         body: JSON.stringify({
-          from: process.env.EMAIL_FROM ?? "ERP <onboarding@resend.dev>",
+          from: process.env.EMAIL_FROM ?? "Pixel Schoolware <onboarding@resend.dev>",
           to: [to],
           subject,
           text,

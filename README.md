@@ -1,4 +1,4 @@
-# ERP
+# Pixel Schoolware
 
 A simple, clean school management platform for Indian schools. Built by **PastAndPixels Group**.
 
